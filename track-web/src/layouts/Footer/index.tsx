@@ -3,7 +3,7 @@ import { Layout } from 'antd';
 
 const {  Footer:AntFooter  } = Layout;
 const Footer = () => {
-    return <AntFooter style={{ textAlign: 'center' }}>
+    return <AntFooter className="text-center">
         aixdb ©2024
     </AntFooter>
 }

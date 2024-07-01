@@ -3,7 +3,7 @@ import { Layout } from 'antd';
 
 const { Content: AntContent } = Layout;
 const Main = ({ children }: { children: React.ReactNode }) => {
-    return <AntContent style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+    return <AntContent className="my-[24px] ml-[16px]" style={{ overflow: 'initial' }}>
         {children}
     </AntContent>
 }

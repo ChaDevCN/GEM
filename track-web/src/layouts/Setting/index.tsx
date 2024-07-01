@@ -12,7 +12,7 @@ const items: MenuItem[] = [
 ];
 const Menu = () => {
     return (
-        <AntSider className="bg-white" style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }} theme={'light'}>
+        <AntSider className="bg-white h-[100vh] overflow-auto fixed left-0 top-0 bottom-0" theme={'light'}>
             <AntMenu
                 defaultSelectedKeys={['1']}
                 defaultOpenKeys={['sub1']}
