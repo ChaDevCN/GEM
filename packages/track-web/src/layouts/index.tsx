@@ -13,7 +13,7 @@ const LayoutConf = ({ children }: { children: React.ReactNode }) => {
         }}>
             <Layout hasSider>
                 <Setting />
-                <Layout className='ml-[200px]'>
+                <Layout>
                     <Header />
                     <Content >
                         <Main>{children}</Main >
