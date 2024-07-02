@@ -9,6 +9,6 @@ import './index.css'
 const App = () => useRoutes(router)
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
-    <App/>
+    <App />
   </BrowserRouter>
 )
