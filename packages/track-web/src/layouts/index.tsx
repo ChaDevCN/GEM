@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layout, ConfigProvider } from 'antd';
+import { Outlet } from 'react-router-dom';
 import Footer from './Footer';
 import Setting from './Setting';
 import Main from './Main';
@@ -9,7 +10,7 @@ import Header from './Header';
 import "./index.less"
 
 const { Content } = Layout;
-const LayoutConf = ({ children }: { children: React.ReactNode }) => {
+const LayoutConf = () => {
     const [collapsed, setCollapsed] = React.useState(false);
 
     return (
@@ -32,7 +33,7 @@ const LayoutConf = ({ children }: { children: React.ReactNode }) => {
                 <Layout>
                     <Header collapsed={collapsed} setCollapsed={setCollapsed} />
                     <Content >
-                        <Main>{children}</Main >
+                        <Main><Outlet /> </Main >
                     </Content>
                     <Footer />
                 </Layout>

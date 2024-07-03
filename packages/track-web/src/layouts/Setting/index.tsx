@@ -1,4 +1,5 @@
 import React from "react"
+import { useNavigate  } from "react-router-dom"
 import {
     PieChartOutlined,
     UnorderedListOutlined,
@@ -10,6 +11,7 @@ import {
     ToolOutlined,
     AlertOutlined,
     QuestionCircleOutlined,
+    LockOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu as AntMenu } from 'antd';
@@ -52,8 +54,15 @@ const items: MenuItem[] = [
     { key: '12', icon: <UserOutlined />, label: '用户管理' },
     { key: '13', icon: <SettingOutlined />, label: '设置' },
     { key: '14', icon: <QuestionCircleOutlined />, label: '帮助和文档' },
+    { key: '/ssl-certificate-management', icon: <LockOutlined />, label: 'SSL 证书管理' },
 ];
 const Menu = ({ collapsed }: { collapsed: boolean }) => {
+    const nav = useNavigate()
+    const click = ({key}:{key:string}) => {
+        console.log(key);
+        
+        nav(key)
+    }
     return (
         <AntSider collapsed={collapsed} className="bg-white h-[100vh] overflow-auto fixed left-0 top-0 bottom-0" theme={'light'}>
             <div className="h-[60px] overflow-hidden text-xl flex justify-center items-center select-none">
@@ -65,6 +74,7 @@ const Menu = ({ collapsed }: { collapsed: boolean }) => {
                 mode="inline"
                 theme="light"
                 items={items}
+                onClick={click}
             />
         </AntSider>
     )
