@@ -9,13 +9,13 @@ MONGODB_CONFIG:
   logging: false                     # 数据库打印日志
   synchronize: true                  # 是否开启同步数据表功能
 MYSQL_CONFIG:
-  name: "material_test2"
+  name: "material_test"
   type: "mysql"
   host: "8.137.123.151"
   port: 3307
   username: "root"
   password: "123456"
-  database: "material_test2"
+  database: "material_test"
   entities: "mysql"
   logging: true
   synchronize: true

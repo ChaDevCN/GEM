@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 
 import { getConfig, TransformInterceptor } from '@app/comm';
 
+import { UserModule } from './user/user.module';
+
 @Module({
   imports: [
     CacheModule.register({
@@ -15,6 +17,7 @@ import { getConfig, TransformInterceptor } from '@app/comm';
       isGlobal: true,
       load: [getConfig],
     }),
+    UserModule,
   ],
   controllers: [],
   providers: [
