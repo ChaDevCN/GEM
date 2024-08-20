@@ -1,0 +1,8 @@
+{
+  "name": "ssl",
+  "version": "0.0.1",
+  "description":"ssl模块",
+  "scripts": {
+    "dev": "cd .. && pnpm start:ssl"
+  }
+}

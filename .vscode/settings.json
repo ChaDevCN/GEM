@@ -1,17 +1,19 @@
 {
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": true
   },
   "eslint.validate": [
     "javascript",
     "javascriptreact",
     "typescript",
-    "typescriptreact"
+    "typescriptreact",
+    "vue"
   ],
+  "eslint.format.enable": true,
+  "editor.formatOnSave": false,
   "eslint.codeAction.showDocumentation": {
     "enable": true
   },
-  "eslint.format.enable": true,
   "eslint.probe": [
     "javascript",
     "javascriptreact",
@@ -20,6 +22,5 @@
     "html",
     "vue",
     "markdown"
-  ],
-  "editor.formatOnSave": false
+  ]
 }

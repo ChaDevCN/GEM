@@ -1,0 +1,38 @@
+{
+  "monorepo": true,
+  "root": "apps/user/GEM",
+  "sourceRoot": "apps/user/src",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/user/tsconfig.app.json"
+  },
+  "projects": {
+    "user": {
+      "type": "application",
+      "root": "apps/user",
+      "entryFile": "main",
+      "sourceRoot": "apps/user/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/user/tsconfig.app.json"
+      }
+    },
+    "ssl": {
+      "type": "application",
+      "root": "apps/ssl",
+      "entryFile": "main",
+      "sourceRoot": "apps/ssl/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/ssl/tsconfig.app.json"
+      }
+    },
+    "comm": {
+      "type": "library",
+      "root": "libs/comm",
+      "entryFile": "index",
+      "sourceRoot": "libs/comm/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/comm/tsconfig.lib.json"
+      }
+    }
+  }
+}
