@@ -23,7 +23,6 @@ export class TransformInterceptor<T>
       map((data) => ({
         data,
         status: 0,
-        extra: {},
         message: 'success',
         success: true,
       })),

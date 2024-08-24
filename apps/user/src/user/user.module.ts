@@ -4,9 +4,10 @@ import { DatabaseModule } from '@app/comm';
 
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
+import { UserProviders } from './user.providers';
 @Module({
   controllers: [UserController],
-  providers: [UserService],
+  providers: [...UserProviders, UserService],
   imports: [forwardRef(() => DatabaseModule)],
   exports: [UserService],
 })

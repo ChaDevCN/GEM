@@ -1,7 +1,9 @@
 {
-  "monorepo": true,
-  "root": "apps/user/GEM",
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
   "sourceRoot": "apps/user/src",
+  "monorepo": true,
+  "root": "apps/user",
   "compilerOptions": {
     "webpack": true,
     "tsConfigPath": "apps/user/tsconfig.app.json"
