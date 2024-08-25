@@ -6,7 +6,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2021",
+    "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
@@ -24,7 +24,19 @@
       ],
       "@app/comm/*": [
         "libs/comm/src/*"
-      ]
+      ],
+      "@app/common": [
+        "libs/comm/src"
+      ],
+      "@app/common/*": [
+        "libs/comm/src/*"
+      ],
     }
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "test",
+    "**/*spec.ts"
+  ]
 }

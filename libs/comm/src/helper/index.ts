@@ -1,6 +1,28 @@
+/*
+ * @Author: Charlie <charlie.l1u@outlook.com>
+ * @Date: 2024-08-24 15:07:24
+ * @LastEditors: Charlie <charlie.l1u@outlook.com>
+ * @LastEditTime: 2024-08-24 22:32:52
+ * @FilePath: \GEM\libs\comm\src\helper\index.ts
+ * @Description: Willing to work myself to death, just to outperform others.
+ */
 import { IPaginationOptions, IPaginationMeta } from 'nestjs-typeorm-paginate';
 import { defaultPaginationParams, MAX_PAGE_SIZE } from './constants';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+
+type IPayloadUser = {
+  status?: number;
+  gitAccessToken?: string;
+  gitUserId?: number;
+  userId?: number;
+  username?: string;
+  name: string;
+  email: string;
+  feishuAccessToken?: string;
+  feishuUserId?: string;
+  department?: string;
+  departmentId?: string;
+};
 
 export class CustomPaginationMeta {
   constructor(

@@ -1,3 +1,11 @@
+/*
+ * @Author: Charlie <charlie.l1u@outlook.com>
+ * @Date: 2024-08-20 22:44:53
+ * @LastEditors: Charlie <charlie.l1u@outlook.com>
+ * @LastEditTime: 2024-08-25 20:05:55
+ * @FilePath: \GEM\libs\comm\src\exceptions\http.exception.filter.ts
+ * @Description: Willing to work myself to death, just to outperform others.
+ */
 import {
   ExceptionFilter,
   Catch,
@@ -28,11 +36,18 @@ export class HttpExceptionFilter implements ExceptionFilter {
       return;
     }
 
+    const exceptionResponse = exception.getResponse();
+    let message = (exceptionResponse as any).message || exceptionResponse;
+
+    if (typeof message === 'object' && message.message) {
+      message = message.message;
+    }
+
     response.status(status).json({
       statusCode: status,
       timestamp: new Date().toISOString(),
       path: request.url,
-      message: exception.getResponse(),
+      message,
     });
   }
 }

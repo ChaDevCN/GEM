@@ -1,8 +1,0 @@
-{
-  "name": "user",
-  "version": "0.0.1",
-  "description":"user模块",
-  "scripts": {
-    "dev": "cd .. && pnpm start:user"
-  }
-}

@@ -19,3 +19,5 @@ MYSQL_CONFIG:
   entities: "mysql"
   logging: true
   synchronize: true
+LOCAL_USER_CONFIG:
+  SECRET: gem

@@ -20,6 +20,22 @@ import { Layout } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number];
 const { Sider: AntSider } = Layout;
 const items: MenuItem[] = [
+	{
+		key: '/nginx-management',
+		icon: <LockOutlined />,
+		label: 'Nginx 管理',
+		children: [
+			{
+				key: '/nginx-management/certificates',
+				label: '证书管理',
+			},
+			{
+				key: '/nginx-management/domains',
+				label: '域名管理',
+				// 提供对与 Nginx 相关的所有域名进行管理的功能。
+			}
+		]
+	},
 	{ key: '/dashboard', icon: <PieChartOutlined />, label: '仪表板' },
 	{ key: '/event-logs', icon: <UnorderedListOutlined />, label: '事件记录' },
 	{ key: '/user-behavior', icon: <UserOutlined />, label: '用户行为' },
@@ -60,11 +76,6 @@ const items: MenuItem[] = [
 	{ key: '/settings', icon: <SettingOutlined />, label: '设置' },
 	{ key: '/help-docs', icon: <QuestionCircleOutlined />, label: '帮助和文档' },
 	{
-		key: '/ssl-certificate-management',
-		icon: <LockOutlined />,
-		label: 'SSL 证书管理'
-	},
-	{
 		key: '/template-center',
 		icon: <AppstoreOutlined />,
 		label: '模板中心',
@@ -86,7 +97,7 @@ const Menu = ({ collapsed }: { collapsed: boolean }) => {
 			theme={'light'}
 		>
 			<div className="h-[60px] overflow-hidden text-xl flex justify-center items-center select-none text-card-foreground">
-				Logify
+				GEM
 			</div>
 			<AntMenu
 				defaultSelectedKeys={['1']}

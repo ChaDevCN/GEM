@@ -1,3 +1,11 @@
+/*
+ * @Author: Charlie <charlie.l1u@outlook.com>
+ * @Date: 2024-08-20 22:44:53
+ * @LastEditors: Charlie <charlie.l1u@outlook.com>
+ * @LastEditTime: 2024-08-25 21:40:43
+ * @FilePath: \GEM\client\web\src\layouts\index.tsx
+ * @Description: Willing to work myself to death, just to outperform others.
+ */
 import React from 'react';
 import { Layout, ConfigProvider } from 'antd';
 import { Outlet } from 'react-router-dom';
@@ -11,7 +19,6 @@ import './index.less';
 const { Content } = Layout;
 const LayoutConf = () => {
 	const [collapsed, setCollapsed] = React.useState(false);
-
 	return (
 		<ConfigProvider
 			theme={{
@@ -35,7 +42,7 @@ const LayoutConf = () => {
 					<Header collapsed={collapsed} setCollapsed={setCollapsed} />
 					<Content>
 						<Main>
-							<Outlet />{' '}
+							<Outlet />
 						</Main>
 					</Content>
 					<Footer />

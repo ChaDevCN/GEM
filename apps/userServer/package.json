@@ -1,0 +1,11 @@
+{
+  "name": "user-server",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+      "dev": "cd .. && pnpm dev-server:user"
+  }
+}

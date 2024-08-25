@@ -1,9 +1,11 @@
 {
   "extends": "../../tsconfig.json",
+  "include": [
+    "src/**/*",
+    "types/*.d.ts"
+  ],
   "compilerOptions": {
     "declaration": true,
     "outDir": "../../dist/libs/comm"
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
 }

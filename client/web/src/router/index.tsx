@@ -1,44 +1,65 @@
-import React, { Suspense } from 'react';
+/*
+ * @Author: Charlie <charlie.l1u@outlook.com>
+ * @Date: 2024-08-20 22:44:53
+ * @LastEditors: Charlie <charlie.l1u@outlook.com>
+ * @LastEditTime: 2024-08-25 21:50:52
+ * @FilePath: \GEM\client\web\src\router\index.tsx
+ * @Description: Willing to work myself to death, just to outperform others.
+ */
 import Layout from '@/layouts';
-const Page = React.lazy(() => import('@/pages/index'));
-const SSLCertificateManagement = React.lazy(() => import('@/pages/SslPage/index'));
-const NotFound = React.lazy(() => import('@/components/NotFound/index'));
+import loadable from '@loadable/component';
+
+
+const [Page, Nginx, Certificates, Domains, Login, NotFound,] = [
+  () => import('@/pages/index'), // /
+  () => import('@/pages/nginx/index'), // nginx
+  () => import('@/pages/nginx/certificates'), // certificates
+  () => import('@/pages/nginx/domains'), // Domains
+  () => import('@/pages/login/index'), // login
+  () => import('@/components/NotFound/index'), //404
+].map((item) =>
+  loadable(item as any, {
+    fallback: <div>Loading...</div>
+  })
+);
 
 const router = [
   {
-    path: "/",
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <Layout />
-      </Suspense>
-    ),
+    path: '/login',
+    element: <Login />
+  },
+  {
+    path: '/',
+    element: <Layout />,
     children: [
       {
-        path: "",
-        element: (
-          <Suspense fallback={<div>Loading...</div>}>
-            <Page />
-          </Suspense>
-        )
+        path: '',
+        element: <Page />
       },
       {
-        path: "ssl-certificate-management",
-        element: (
-          <Suspense fallback={<div>Loading...</div>}>
-            <SSLCertificateManagement />
-          </Suspense>
-        )
+        path: '/nginx-management',
+        element: <Nginx />,
+        children: [
+          {
+            path: 'certificates',
+            element: <Certificates />,
+          },
+          {
+            path: 'domains',
+            element: <Domains />,
+          },
+          {
+            path: '',
+            element: <Certificates />,
+          },
+        ]
       },
       {
         path: '*',
-        element: (
-          <Suspense fallback={<div>Loading...</div>}>
-            <NotFound />
-          </Suspense>
-        )
+        element: <NotFound />
       }
     ]
-  },
+  }
 ];
 
 export default router;

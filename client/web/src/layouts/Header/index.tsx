@@ -1,10 +1,19 @@
+/*
+ * @Author: Charlie <charlie.l1u@outlook.com>
+ * @Date: 2024-08-20 22:44:53
+ * @LastEditors: Charlie <charlie.l1u@outlook.com>
+ * @LastEditTime: 2024-08-25 22:01:29
+ * @FilePath: \GEM\client\web\src\layouts\Header\index.tsx
+ * @Description: Willing to work myself to death, just to outperform others.
+ */
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 
-import { Layout, Button, Switch } from 'antd';
+import { Layout, Button, Switch, Space } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
 import { useStores } from '@/store';
+
 
 interface ViewTransition {
 	finished: Promise<void>;
@@ -25,8 +34,9 @@ const Header = ({
 	collapsed: boolean;
 	setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+
 	const {
-		globalStore: { setTheme }
+		globalStore: { setTheme, userInfo }
 	} = useStores();
 	const onChange = (
 		checked: boolean,
@@ -81,9 +91,10 @@ const Header = ({
 						height: 64
 					}}
 				/>
-				<div className="mr-5">
+				<Space className="mr-5 flex items-center">
+					<div>{userInfo?.username}</div>
 					<Switch defaultChecked onChange={onChange} />
-				</div>
+				</Space>
 			</div>
 		</AntHeader>
 	);
