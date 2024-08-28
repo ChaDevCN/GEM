@@ -10,19 +10,7 @@ import { IPaginationOptions, IPaginationMeta } from 'nestjs-typeorm-paginate';
 import { defaultPaginationParams, MAX_PAGE_SIZE } from './constants';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
-type IPayloadUser = {
-  status?: number;
-  gitAccessToken?: string;
-  gitUserId?: number;
-  userId?: number;
-  username?: string;
-  name: string;
-  email: string;
-  feishuAccessToken?: string;
-  feishuUserId?: string;
-  department?: string;
-  departmentId?: string;
-};
+
 
 export class CustomPaginationMeta {
   constructor(
@@ -30,7 +18,7 @@ export class CustomPaginationMeta {
     public readonly totalCounts: number,
     public readonly totalPages: number,
     public readonly currentPage: number,
-  ) {}
+  ) { }
 }
 
 export const getPaginationOptions = (

@@ -2,7 +2,7 @@ import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { BUSINESS_ERROR_CODE, BusinessException } from '@app/common';
-import { IS_PUBLIC_KEY } from '@app/comm';
+import { IS_PUBLIC_KEY } from '@app/common';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
@@ -16,15 +16,12 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       context.getClass(),
     ]);
 
-    if (loginAuth) {
-      return true;
-    }
+    if (loginAuth) return true;
+
     return super.canActivate(context);
   }
 
   handleRequest(err, user, info) {
-    console.log(err, user, info);
-
     if (err || !user) {
       throw (
         err ||

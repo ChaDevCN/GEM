@@ -22,7 +22,7 @@ export class UserService {
     private readonly userRoleService: UserRoleService,
     private readonly roleService: RoleService,
     private readonly privilegeService: PrivilegeService,
-  ) {}
+  ) { }
 
   createOrSave(user: User) {
     this.userRepository.save(user);
@@ -70,8 +70,15 @@ export class UserService {
     return await this.userRepository.save({ ...findUser, ...userInfo });
   }
 
-  profile(userId) {
-    return this.userRepository.findOneBy(userId);
+  async profile(id) {
+    try {
+      const { password, ...res } = await this.userRepository.findOneBy({ id })
+      return {
+        ...res
+      }
+    } catch (error) {
+      return null
+    }
   }
 
   async paginate(

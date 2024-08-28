@@ -10,13 +10,15 @@ import Layout from '@/layouts';
 import loadable from '@loadable/component';
 
 
-const [Page, Nginx, Certificates, Domains, Login, NotFound,] = [
+const [Page, Nginx, Certificates, Domains, Login, NotFound, Auth, CertificateMonitoring] = [
   () => import('@/pages/index'), // /
   () => import('@/pages/nginx/index'), // nginx
   () => import('@/pages/nginx/certificates'), // certificates
   () => import('@/pages/nginx/domains'), // Domains
   () => import('@/pages/login/index'), // login
   () => import('@/components/NotFound/index'), //404
+  () => import('@/pages/auth'), //系统管理
+  () => import('@/pages/nginx/certificateMonitoring')
 ].map((item) =>
   loadable(item as any, {
     fallback: <div>Loading...</div>
@@ -33,6 +35,10 @@ const router = [
     element: <Layout />,
     children: [
       {
+        path: '/auth',
+        element: <Auth />
+      },
+      {
         path: '',
         element: <Page />
       },
@@ -40,6 +46,10 @@ const router = [
         path: '/nginx-management',
         element: <Nginx />,
         children: [
+          {
+            path: '',
+            element: <Certificates />,
+          },
           {
             path: 'certificates',
             element: <Certificates />,
@@ -49,8 +59,8 @@ const router = [
             element: <Domains />,
           },
           {
-            path: '',
-            element: <Certificates />,
+            path: 'certificate-monitoring',
+            element: <CertificateMonitoring />
           },
         ]
       },

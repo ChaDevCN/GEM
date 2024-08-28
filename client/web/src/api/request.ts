@@ -18,12 +18,13 @@ import {
 	AxiosError
 } from 'axios';
 import { type RequestResponse } from '@/type';
+import { message } from 'antd';
 const whiteRetry = new Set(['ECONNABORTED', undefined, 0]);
 
 const serviceAxios = axios.create({
 	baseURL: '',
 	timeout: 15 * 1000,
-	withCredentials: false,
+	withCredentials: true,
 	headers: {
 		'Content-Type': 'application/json;charset=utf-8'
 	},
@@ -55,10 +56,16 @@ serviceAxios.interceptors.request.use(
 
 serviceAxios.interceptors.response.use(
 	(response: AxiosResponse) => {
-		if (response.status !== 200 && response.status !== 201) {
-			return response;
+		switch (response.status) {
+			case 200:
+			case 201:
+				return response.data
+			case 401:
+				message.error('信息有误，请重新登录')
+				return
+			default:
+				return response
 		}
-		return response.data;
 	},
 	(err: AxiosError) => {
 		return Promise.reject(err);

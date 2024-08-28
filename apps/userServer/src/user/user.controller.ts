@@ -7,6 +7,7 @@
  * @Description: Willing to work myself to death, just to outperform others.
  */
 import { Controller, Post, Body } from '@nestjs/common';
+import { MessagePattern, Payload as MicroPayload } from '@nestjs/microservices';
 import { UserService } from './user.service';
 import {
   UserListWithPaginationDto,
@@ -19,14 +20,14 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { PayloadUser, BusinessException } from '@app/common';
 import { UserRoleService } from '../user-role/user-role.service';
 import { User } from './user.mysql.entity';
-import { Public } from '../auth/constants';
+import { Public } from '@app/comm';
 @ApiTags('用户')
 @Controller('user')
 export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly userRoleService: UserRoleService,
-  ) {}
+  ) { }
 
   @ApiOperation({
     summary: '用户信息',
@@ -35,7 +36,11 @@ export class UserController {
   profile(@PayloadUser() user: IPayloadUser) {
     return this.userService.profile(user.userId);
   }
-
+  @MessagePattern('userCenter.user.profile')
+  @Public()
+  micro_profile(@MicroPayload() data: any) {
+    return this.profile(data);
+  }
   @ApiOperation({
     summary: '注册',
   })

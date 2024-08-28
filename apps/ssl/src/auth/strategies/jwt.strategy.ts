@@ -3,12 +3,14 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-jwt';
 import { jwtConstants } from '@app/comm';
 
+
 const cookieExtractor = function (req) {
   let token = null;
 
   if (req && req.cookies) {
     token = req.cookies['jwt'];
   }
+
   return token
 };
 
@@ -23,8 +25,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: IPayloadUser): Promise<IPayloadUser> {
-
-
     return { ...payload };
   }
 }

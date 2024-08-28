@@ -21,15 +21,13 @@ export class AuthService {
     private jwtService: JwtService,
     private userService: UserService,
     private oAuthService: OAuthService,
-  ) {}
+  ) { }
 
   async validateLocalUser({ username, password }): Promise<IPayloadUser> {
     const user: User = await this.userService.findUserByLocal({
       username,
       password,
     });
-
-    console.log('user==>', user);
 
     if (!user) return null;
 

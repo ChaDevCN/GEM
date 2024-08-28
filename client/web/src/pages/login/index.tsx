@@ -29,7 +29,7 @@ const App: React.FC = () => {
         manual: true,
         onSuccess: ({ message, status, data: { access_token, userInfo } }) => {
             switch (status) {
-                case 0:
+                case 200:
                     Message.success('登录成功');
                     setToken(access_token);
                     setUserInfo(userInfo)

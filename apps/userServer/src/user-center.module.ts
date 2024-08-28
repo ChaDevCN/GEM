@@ -43,4 +43,4 @@ import { CacheModule } from '@nestjs/cache-manager';
     },
   ],
 })
-export class UserCenterModule {}
+export class UserCenterModule { }

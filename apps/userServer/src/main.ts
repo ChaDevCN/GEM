@@ -1,9 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { VersioningType, ValidationPipe } from '@nestjs/common';
-import { AllExceptionsFilter, HttpExceptionFilter } from '@app/comm';
+import * as cookieParser from 'cookie-parser';
+import { AllExceptionsFilter, HttpExceptionFilter, getConfig } from '@app/comm';
 
 import { generateDocument } from './doc';
 import { UserCenterModule } from './user-center.module';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+
+const { USER_MICROSERVICES } = getConfig()
 
 async function bootstrap() {
   const app = await NestFactory.create(UserCenterModule);
@@ -11,7 +15,16 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter(), new HttpExceptionFilter());
 
   app.setGlobalPrefix('api');
+  app.connectMicroservice<MicroserviceOptions>(
+    {
+      transport: Transport.TCP,
+      options: USER_MICROSERVICES
 
+    },
+    {
+      inheritAppConfig: true
+    }
+  )
   app.enableVersioning({
     type: VersioningType.URI,
   });
@@ -20,7 +33,9 @@ async function bootstrap() {
 
   generateDocument(app);
 
-  // await app.startAllMicroservices();
+  app.use(cookieParser())
+
+  await app.startAllMicroservices();
 
   await app.listen(40001);
 }

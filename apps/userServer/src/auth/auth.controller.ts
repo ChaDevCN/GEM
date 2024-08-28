@@ -10,7 +10,7 @@ import { Controller, Post, UseGuards, Res, Get } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { Public } from './constants';
+import { Public } from '@app/comm';
 import { PayloadUser, getEnv } from '@app/common';
 import { LocalGuard } from './guards/local.guard';
 import { GoogleGuard } from './guards/google.guard';
@@ -18,7 +18,7 @@ import { GoogleGuard } from './guards/google.guard';
 @ApiTags('用户认证')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   @Get('/test')
   @Public()

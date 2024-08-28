@@ -6,7 +6,7 @@
     "dev": "turbo run dev",
     "start:ssl": "cross-env RUNNING_ENV=dev nest start ssl --watch",
     "start:user": "cross-env RUNNING_ENV=dev nest start user-server --watch",
-    "dev-server:user":"cross-env RUNNING_ENV=dev nest start --watch user-server"
+    "dev-server:user": "cross-env RUNNING_ENV=dev nest start --watch user-server"
   },
   "dependencies": {
     "@nestjs/cache-manager": "^2.2.2",
@@ -17,7 +17,9 @@
     "@nestjs/microservices": "^10.3.10",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.3.10",
+    "@nestjs/schedule": "^4.1.0",
     "@nestjs/swagger": "^7.4.0",
+    "@nestjs/typeorm": "^10.0.2",
     "@types/cache-manager": "^4.0.6",
     "axios": "^1.7.2",
     "babel-loader": "^9.1.3",
@@ -26,6 +28,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "cookie-parser": "^1.4.6",
+    "cron": "^3.1.7",
     "cross-env": "^7.0.3",
     "crypto": "^1.0.1",
     "dayjs": "^1.11.12",
@@ -57,6 +60,7 @@
     "rxjs": "^7.8.1",
     "scheduler": "^0.23.2",
     "semver": "^7.6.3",
+    "ssl-checker": "^2.0.10",
     "tiny-invariant": "^1.3.3",
     "tiny-warning": "^1.0.3",
     "typeorm": "^0.3.20",

@@ -22,3 +22,10 @@ export const getUserInfo = async () => {
 		url: '/api/v1/user/profile'
 	});
 };
+
+export const getUserList = async <T>() => {
+	await request<T>({
+		method: 'post',
+		url: '/api/v1/user/list/pagination'
+	})
+}

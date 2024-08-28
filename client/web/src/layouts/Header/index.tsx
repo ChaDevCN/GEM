@@ -7,11 +7,12 @@
  * @Description: Willing to work myself to death, just to outperform others.
  */
 import React from 'react';
+import { useNavigate } from "react-router-dom"
 import { observer } from 'mobx-react-lite';
 
-import { Layout, Button, Switch, Space } from 'antd';
+import { Layout, Button, Switch, Space, Dropdown } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-
+import type { MenuProps } from 'antd';
 import { useStores } from '@/store';
 
 
@@ -26,6 +27,8 @@ type DocumentNew = Document & {
 	startViewTransition: (callback: () => void) => ViewTransition | undefined;
 };
 
+
+
 const { Header: AntHeader } = Layout;
 const Header = ({
 	collapsed,
@@ -34,7 +37,15 @@ const Header = ({
 	collapsed: boolean;
 	setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-
+	const nav = useNavigate()
+	const items: MenuProps['items'] = [
+		{
+			key: '1',
+			label: (
+				<div onClick={() => nav('/auth')}>系统管理</div>
+			),
+		},
+	];
 	const {
 		globalStore: { setTheme, userInfo }
 	} = useStores();
@@ -70,7 +81,7 @@ const Header = ({
 				document.documentElement.animate(
 					{ clipPath: isDark ? clipPath.reverse() : clipPath },
 					{
-						duration: 400,
+						duration: 300,
 						pseudoElement: isDark
 							? '::view-transition-old(root)'
 							: '::view-transition-new(root)'
@@ -93,6 +104,9 @@ const Header = ({
 				/>
 				<Space className="mr-5 flex items-center">
 					<div>{userInfo?.username}</div>
+					<Dropdown menu={{ items }}>
+						<div>{userInfo?.username || '韭菜'}</div>
+					</Dropdown>
 					<Switch defaultChecked onChange={onChange} />
 				</Space>
 			</div>

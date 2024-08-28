@@ -7,10 +7,5 @@
  * @Description: Willing to work myself to death, just to outperform others.
  */
 import { Outlet } from "react-router-dom"
-const Page = () => {
-    return <div>
-        index
-        <Outlet />
-    </div>
-}
+const Page = () => <Outlet />
 export default Page

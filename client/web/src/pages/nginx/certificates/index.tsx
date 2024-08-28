@@ -1,4 +1,12 @@
+
+import { ProTable } from "@ant-design/pro-components"
+
 const Page = () => {
-    return <div>xxx</div>
+
+    return <div>
+
+
+        <ProTable />
+    </div>
 }
 export default Page

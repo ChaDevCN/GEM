@@ -1,23 +1,31 @@
 MONGODB_CONFIG:
-  name: "ignition_test"              # 自定义次数据库链接名称
-  type: mongodb                      # 数据库链接类型
-  url: "mongodb://root:123456@8.137.123.151:27017/fast_gateway_test?authSource=admin"   # 数据库链接地址
-  username: "root"                   # 数据库链接用户名
-  password: "123456"                 # 数据库链接密码
-  database: "fast_gateway_test"      # 数据库名
-  entities: "mongo"                  # 自定义加载类型
-  logging: false                     # 数据库打印日志
-  synchronize: true                  # 是否开启同步数据表功能
+  name: 'ignition_test' # 自定义次数据库链接名称
+  type: mongodb # 数据库链接类型
+  url: 'mongodb://root:123456@8.137.123.151:27017/fast_gateway_test?authSource=admin' # 数据库链接地址
+  username: 'root' # 数据库链接用户名
+  password: '123456' # 数据库链接密码
+  database: 'fast_gateway_test' # 数据库名
+  entities: 'mongo' # 自定义加载类型
+  logging: false # 数据库打印日志
+  synchronize: true # 是否开启同步数据表功能
 MYSQL_CONFIG:
-  name: "material_test"
-  type: "mysql"
-  host: "8.137.123.151"
+  name: 'material_test'
+  type: 'mysql'
+  host: '8.137.123.151'
   port: 3307
-  username: "root"
-  password: "123456"
-  database: "material_test"
-  entities: "mysql"
+  username: 'root'
+  password: '123456'
+  database: 'material_test'
+  entities: 'mysql'
   logging: true
   synchronize: true
+  keepConnectionAlive: true
+  extra:
+    connectionLimit: 10
+    maxIdle: 5
+    idleTimeoutMillis: 60000
 LOCAL_USER_CONFIG:
   SECRET: gem
+USER_MICROSERVICES:
+  port: 7872
+  host: 0.0.0.0

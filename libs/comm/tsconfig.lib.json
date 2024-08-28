@@ -1,11 +1,8 @@
 {
   "extends": "../../tsconfig.json",
-  "include": [
-    "src/**/*",
-    "types/*.d.ts"
-  ],
+  "include": ["src/**/*", "../../types/globle.d.ts"],
   "compilerOptions": {
     "declaration": true,
     "outDir": "../../dist/libs/comm"
-  },
+  }
 }
