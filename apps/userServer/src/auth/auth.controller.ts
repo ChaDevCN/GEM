@@ -42,7 +42,7 @@ export class AuthController {
     response.cookie('jwt', access_token, {
       path: '/',
       httpOnly: true,
-      domain: isProd === 'prod' ? '.ig-space.com' : undefined,
+      domain: isProd === 'prod' ? '.aixdb.cn' : undefined,
     });
 
     return { userInfo: user, access_token };
@@ -64,7 +64,7 @@ export class AuthController {
     response.cookie('jwt', access_token, {
       path: '/',
       httpOnly: true,
-      domain: '.ig-space.com',
+      domain: '.aixdb.cn',
     });
 
     return access_token;

@@ -14,7 +14,6 @@ import { useRequest } from 'ahooks'
 import { Button, Checkbox, Form, Input, Card, message as Message } from 'antd';
 
 import { login } from '@/api';
-import { setToken } from '@/utils';
 import { useStores } from "@/store"
 
 import loginImg from "@/assets/image/image.png"
@@ -27,11 +26,10 @@ const App: React.FC = () => {
     const { globalStore: { setUserInfo } } = useStores()
     const { run, loading } = useRequest(login<Profile>, {
         manual: true,
-        onSuccess: ({ message, status, data: { access_token, userInfo } }) => {
+        onSuccess: ({ message, status, data: { userInfo } }) => {
             switch (status) {
                 case 200:
                     Message.success('登录成功');
-                    setToken(access_token);
                     setUserInfo(userInfo)
                     nav('/');
                     break;

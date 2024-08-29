@@ -1,11 +1,14 @@
 import { Injectable, NotFoundException, Inject } from '@nestjs/common';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { Repository } from 'typeorm';
+import throat from 'throat';
+
 import { CertificateMonitoring, IPType, CertificateStatus } from './monitor.mysql.entity';
 import * as tls from 'tls';
 import * as dns from 'dns';
 import { BUSINESS_ERROR_CODE, BusinessException } from '@app/comm';
 import { CreateCertificateMonitoringDto } from './monitor.dto';
-
+// const pLimit = require('p-limit')
 @Injectable()
 export class CertificateMonitoringService {
     constructor(
@@ -61,8 +64,30 @@ export class CertificateMonitoringService {
         existingCertificate.validTo = certInfo.validTo;
         existingCertificate.issuer = certInfo.issuer;
         existingCertificate.lastChecked = new Date();
+        existingCertificate.status = this.calculateStatus(certInfo.validTo);
         return this.certificateRepo.save(existingCertificate);
     }
+    @Cron(CronExpression.EVERY_DAY_AT_2AM, {
+        name: 'task',
+        timeZone: 'Asia/shanghai'
+    })
+    async updateAllCertificates() {
+        const certificates = await this.getAll();
+        const concurrency = 10; // 设置最大并发数为10
+        const limit = throat(concurrency);
+
+        for (let i = 0; i < certificates.length; i += concurrency) {
+            const batch = certificates.slice(i, i + concurrency);
+            const updatePromises = batch.map(certificate =>
+                limit(() => this.update(certificate.id))
+            );
+            await Promise.all(updatePromises);
+            console.log(`Processed batch ${i / concurrency + 1}`);
+        }
+
+        console.log('All certificates have been processed.');
+    }
+
 
     async getAll(): Promise<CertificateMonitoring[]> {
         return this.certificateRepo.find();

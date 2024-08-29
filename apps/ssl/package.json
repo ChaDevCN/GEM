@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description":"ssl模块",
   "scripts": {
-    "dev": "cd .. && pnpm start:ssl"
+    "dev": "cd .. && pnpm start:ssl",
+    "build": "cd .. && pnpm build:ssl"
   }
 }

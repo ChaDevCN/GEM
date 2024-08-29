@@ -16,16 +16,16 @@ export const login = async <T>(data: Login) =>
 		data
 	});
 
-export const getUserInfo = async () => {
-	await request({
+export const getUserInfo = async<T>() =>
+	await request<T>({
 		method: 'post',
 		url: '/api/v1/user/profile'
 	});
-};
 
-export const getUserList = async <T>() => {
+
+export const getUserList = async <T>() =>
 	await request<T>({
 		method: 'post',
 		url: '/api/v1/user/list/pagination'
 	})
-}
+

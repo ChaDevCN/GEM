@@ -29,6 +29,8 @@ export class CertificateMonitoringController {
         try {
             return this.certificateService.createFromDomain(createDto, req.user);
         } catch (error) {
+            console.log(error);
+
             throw (
                 new BusinessException({
                     code: BUSINESS_ERROR_CODE.COMMON,
@@ -75,4 +77,10 @@ export class CertificateMonitoringController {
             throw new NotFoundException(`Certificate monitoring record with ID ${id} not found`);
         }
     }
+
+    // @Process('checkValidity')
+    // async checkValidity(job: Job<{ certificateId: number }>) {
+    //     const { certificateId } = job.data;
+    //     await this.certificateService.checkValidity(certificateId);
+    // }
 }

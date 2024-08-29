@@ -6,7 +6,7 @@
  * @FilePath: \GEM\client\web\src\main.tsx
  * @Description: Willing to work myself to death, just to outperform others.
  */
-import { createBrowserRouter, RouterProvider, useNavigate, type NavigateFunction } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 
 import { ThemeProvider } from 'antd-style';
@@ -23,6 +23,7 @@ import 'uno.css';
 
 
 const router = createBrowserRouter(routes);
+
 
 const App = observer(() => {
 	const {

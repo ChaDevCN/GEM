@@ -6,8 +6,11 @@
  * @FilePath: \GEM\client\web\src\router\index.tsx
  * @Description: Willing to work myself to death, just to outperform others.
  */
+import { getUserInfo } from '@/api';
 import Layout from '@/layouts';
 import loadable from '@loadable/component';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 const [Page, Nginx, Certificates, Domains, Login, NotFound, Auth, CertificateMonitoring] = [
@@ -24,7 +27,20 @@ const [Page, Nginx, Certificates, Domains, Login, NotFound, Auth, CertificateMon
     fallback: <div>Loading...</div>
   })
 );
+const AuthCom = ({ children }: { children: React.ReactNode }) => {
+  const nav = useNavigate()
+  useEffect(() => {
+    const init = async () => {
 
+      const { status } = await getUserInfo()
+      if (status === 10002) {
+        nav('/login')
+      }
+    }
+    init()
+  }, [])
+  return <>{children}</>
+}
 const router = [
   {
     path: '/login',
@@ -32,32 +48,32 @@ const router = [
   },
   {
     path: '/',
-    element: <Layout />,
+    element: <AuthCom><Layout /></AuthCom>,
     children: [
-      {
-        path: '/auth',
-        element: <Auth />
-      },
+      // {
+      //   path: '/auth',
+      //   element: <Auth />
+      // },
       {
         path: '',
-        element: <Page />
+        element: <CertificateMonitoring />
       },
       {
         path: '/nginx-management',
-        element: <Nginx />,
+        element: <CertificateMonitoring />,
         children: [
           {
             path: '',
-            element: <Certificates />,
+            element: <CertificateMonitoring />,
           },
-          {
-            path: 'certificates',
-            element: <Certificates />,
-          },
-          {
-            path: 'domains',
-            element: <Domains />,
-          },
+          // {
+          //   path: 'certificates',
+          //   element: <Certificates />,
+          // },
+          // {
+          //   path: 'domains',
+          //   element: <Domains />,
+          // },
           {
             path: 'certificate-monitoring',
             element: <CertificateMonitoring />

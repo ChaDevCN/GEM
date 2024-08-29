@@ -44,6 +44,7 @@ const Header = ({
 			label: (
 				<div onClick={() => nav('/auth')}>系统管理</div>
 			),
+			disabled: true
 		},
 	];
 	const {

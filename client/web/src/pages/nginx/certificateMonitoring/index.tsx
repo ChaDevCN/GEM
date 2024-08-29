@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { CSVLink } from 'react-csv';
 import {
     Button,
@@ -36,6 +36,11 @@ const statusColors = {
     invalid: 'error',
     unknown: 'default'
 };
+const EllipsisText = ({ text, children }: { text: string, children: React.ReactNode }) => (
+    <Tooltip placement="top" title={text}>
+        {children}
+    </Tooltip>
+)
 const Page = () => {
     const [list, setList] = useState<CertificateMonitoring[] | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -71,11 +76,13 @@ const Page = () => {
         },
         {
             key: '2',
-            label: <div>编辑</div>
+            label: <div>编辑</div>,
+            disabled: true
         },
         {
             key: '3',
-            label: <div>删除</div>
+            label: <div>删除</div>,
+            disabled: true
         }
     ];
     const onClick = (key: string, id: number) => {
@@ -90,7 +97,8 @@ const Page = () => {
             title: '域名',
             dataIndex: 'hostname',
             width: 160,
-            fixed: 'left'
+            fixed: 'left',
+            render: (_) => <EllipsisText text={_ as string}><div className='truncate ...'>{_}</div></EllipsisText>
         },
         {
             title: '状态',
@@ -100,17 +108,36 @@ const Page = () => {
                 <Tag color={statusColors[status as keyof typeof statusColors]}>
                     {status}
                 </Tag>
-            )
+            ),
+            filters: [
+                { text: '全部', value: 'all' },
+                { text: '有效', value: 'valid' },
+                { text: '过期', value: 'expired' },
+                { text: '即将过期', value: 'expiring_soon' },
+                { text: '无效', value: 'invalid' },
+                { text: '未知', value: 'unknown' },
+            ],
+            onFilter: (value, record) => value === 'all' ? true : record.status === value,
+            valueType: 'select',
+            valueEnum: {
+                valid: { text: '有效', status: 'Success' },
+                expired: { text: '过期', status: 'Error' },
+                expiring_soon: { text: '即将过期', status: 'Warning' },
+                invalid: { text: '无效', status: 'Error' },
+                unknown: { text: '未知', status: 'Default' },
+            },
         },
         {
             title: '过期时间',
             dataIndex: 'validTo',
-            render: (time) => <div>{dayjs(time as string).format('YYYY-MM-DD')}</div>,
-            width: 120
+            render: (time) => <EllipsisText text={dayjs(time as string).format('YYYY-MM-DD HH:mm:ss')}><div className='truncate ...'>{dayjs(time as string).format(' YYYY-MM-DD')}</div></EllipsisText>,
+            width: 120,
+            sorter: (a, b) => dayjs(a.validTo).diff(dayjs(b.validTo))
         },
         {
             title: '有效期',
             dataIndex: 'daysUntilExpiry',
+            sorter: (a, b) => a.daysUntilExpiry - b.daysUntilExpiry,
             render: (_, { validFrom, validTo }) => {
                 const startDate = dayjs(validFrom);
                 const endDate = dayjs(validTo);
@@ -119,13 +146,15 @@ const Page = () => {
                 const totalDuration = endDate.diff(startDate, 'day');
                 const daysUntilExpiry = endDate.diff(today, 'day');
 
-                const progressPercent = (daysUntilExpiry / totalDuration) * 100;
+                const progressPercent = totalDuration === 0 ? 100 : (daysUntilExpiry / totalDuration) * 100;
+                const progressStatus = daysUntilExpiry <= 0 ? 'exception' : (progressPercent < 100 ? 'active' : 'success');
+
                 return (
                     <Tooltip title={`剩余${daysUntilExpiry} 天`}>
                         <Progress
                             percent={Math.round(progressPercent)}
                             format={() => `${daysUntilExpiry}/${totalDuration}`}
-                            status={progressPercent < 100 ? 'active' : 'exception'}
+                            status={progressStatus}
                         />
                     </Tooltip>
                 );
@@ -141,26 +170,30 @@ const Page = () => {
         {
             title: 'IP地址',
             dataIndex: 'ipAddress',
-            width: 120
+            width: 120,
+            render: (_) => <EllipsisText text={_ as string}><div className='truncate ...'>{_}</div></EllipsisText>
         },
         {
             title: '颁发者',
             dataIndex: 'issuer',
-            width: 100
+            width: 100,
+            render: (_) => <EllipsisText text={_ as string}><div className='truncate ...'>{_}</div></EllipsisText>
         },
         {
             title: '最后检查时间',
             dataIndex: 'lastChecked',
             render: (time) => (
-                <div>{dayjs(time as string).format('YYYY-MM-DD HH:mm:ss')}</div>
+                <EllipsisText text={dayjs(time as string).format('YYYY-MM-DD HH:mm:ss')}><div className='truncate ...'>{dayjs(time as string).format('YYYY-MM-DD HH:mm:ss')}</div></EllipsisText>
+
             ),
-            width: 170
+            width: 170,
+            sorter: (a, b) => dayjs(a.lastChecked).diff(dayjs(b.lastChecked))
         },
         {
             title: '备注',
             dataIndex: 'notes',
-            render: (_) => _ || '-',
-            width: '130'
+            width: '130',
+            render: (_) => <EllipsisText text={_ as string}><div className='truncate ...'>{_}</div></EllipsisText>
         },
         {
             title: '操作',
@@ -195,9 +228,12 @@ const Page = () => {
             <ProTable
                 actionRef={tableRef}
                 request={async () => {
-                    const { data } = await getCertificateMonitoringList<
+                    let { data, status } = await getCertificateMonitoringList<
                         CertificateMonitoring[]
                     >();
+                    if (status !== 200) {
+                        data = []
+                    }
                     setList(data);
                     return {
                         total: data.length,
@@ -208,9 +244,13 @@ const Page = () => {
                 headerTitle="证书监控"
                 columns={columns}
                 search={false}
-                scroll={{ x: 1300 }}
+                scroll={{ x: 1300, y: 'calc(100vh - 342px)' }}
                 toolBarRender={toolBarRender as any}
                 rowKey={'key'}
+                pagination={{
+                    pageSize: 10,
+                    showSizeChanger: false
+                }}
             />
             <Modal
                 open={isModalOpen}

@@ -56,15 +56,16 @@ serviceAxios.interceptors.request.use(
 
 serviceAxios.interceptors.response.use(
 	(response: AxiosResponse) => {
-		switch (response.status) {
+		switch (response.data.status) {
 			case 200:
 			case 201:
 				return response.data
-			case 401:
+			case 10002:
 				message.error('信息有误，请重新登录')
-				return
+				return response.data
 			default:
-				return response
+				message.error(response.data.message)
+				return response.data
 		}
 	},
 	(err: AxiosError) => {

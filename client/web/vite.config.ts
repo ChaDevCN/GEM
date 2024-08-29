@@ -36,5 +36,8 @@ export default defineConfig({
 				rewrite: (path) => path.replace(/^\/api\/v2/, '/api')
 			}
 		}
+	},
+	build: {
+		outDir: path.resolve(__dirname, '../../dist/client')
 	}
 });
