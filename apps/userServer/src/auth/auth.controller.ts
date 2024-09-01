@@ -10,7 +10,7 @@ import { Controller, Post, UseGuards, Res, Get } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { Public } from '@app/comm';
+import { BUSINESS_ERROR_CODE, BusinessException, Public } from '@app/comm';
 import { PayloadUser, getEnv } from '@app/common';
 import { LocalGuard } from './guards/local.guard';
 import { GoogleGuard } from './guards/google.guard';
@@ -18,7 +18,7 @@ import { GoogleGuard } from './guards/google.guard';
 @ApiTags('用户认证')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   @Get('/test')
   @Public()
@@ -38,7 +38,6 @@ export class AuthController {
   ) {
     const { access_token } = await this.authService.login(user);
     const isProd = getEnv();
-
     response.cookie('jwt', access_token, {
       path: '/',
       httpOnly: true,
@@ -76,8 +75,16 @@ export class AuthController {
   })
   @Post('logout')
   async logout(@Res({ passthrough: true }) response) {
-    response.setCookie('jwt', '');
-    return {};
+    try {
+      response.cookie('jwt', '', { httpOnly: true, maxAge: 0 });
+    } catch (error) {
+      throw new BusinessException({
+        code: BUSINESS_ERROR_CODE.COMMON,
+        message: '服务器忙，稍后再试',
+      });
+    }
+
+    return { message: 'Logout successful' };
   }
 
   @ApiOperation({

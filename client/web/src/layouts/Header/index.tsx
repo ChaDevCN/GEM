@@ -1,12 +1,13 @@
 import React, { useRef } from 'react';
-import { useNavigate } from "react-router-dom"
 import { observer } from 'mobx-react-lite';
 
-import { Layout, Button, Switch, Space, Dropdown, Avatar } from 'antd';
+import { Layout, Button, Space, Dropdown, Avatar, message } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined, BulbOutlined, SunOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { useStores } from '@/store';
-
+import { useRequest } from 'ahooks';
+import { logout } from '@/api';
+import { useNavigate } from 'react-router-dom';
 
 interface ViewTransition {
 	finished: Promise<void>;
@@ -29,20 +30,48 @@ const Header = ({
 	collapsed: boolean;
 	setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-	const nav = useNavigate()
+
+
 	const items: MenuProps['items'] = [
 		{
-			key: '1',
+			key: 1,
 			label: (
-				<div onClick={() => nav('/auth')}>系统管理</div>
+				<div>系统管理</div>
 			),
 			disabled: true
+		},
+		{
+			key: 2,
+			label: (
+				<div>退出登录</div>
+			),
 		},
 	];
 	const {
 		globalStore: { setTheme, userInfo, appearance }
 	} = useStores();
+	const nav = useNavigate()
 	const checked = useRef<boolean>(true)
+	const { run } = useRequest(logout, {
+		manual: true,
+		onSuccess({ status, message: msg }) {
+			if (status === 200) {
+				nav('/login')
+				message.success('成功退出...!')
+			} else {
+				message.error(JSON.stringify(msg))
+			}
+		}
+	})
+	const onClick = ({ key }: { key: string }) => {
+		switch (key) {
+			case '2':
+				run()
+				break;
+		}
+
+	}
+
 	const onChange = (
 		checked: boolean,
 		e: React.MouseEvent<HTMLButtonElement>
@@ -100,7 +129,7 @@ const Header = ({
 					}}
 				/>
 				<Space className='mr-5' align='center' size={'middle'}>
-					<Dropdown menu={{ items }} placement="bottom" arrow trigger={['click']}>
+					<Dropdown menu={{ items, onClick }} placement="bottom" arrow trigger={['click']}>
 						<Avatar style={{ background: getReandomColor() }} className='mb-1 cursor-pointer'>{userInfo?.username[0]}</Avatar>
 					</Dropdown>
 					<Button
