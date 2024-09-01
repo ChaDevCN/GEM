@@ -13,7 +13,17 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-const [Page, Nginx, Certificates, Domains, Login, NotFound, Auth, CertificateMonitoring] = [
+const [
+  Page,
+  Nginx,
+  Certificates,
+  Domains,
+  Login,
+  NotFound,
+  Auth,
+  CertificateMonitoring,
+  Applycert
+] = [
   () => import('@/pages/index'), // /
   () => import('@/pages/nginx/index'), // nginx
   () => import('@/pages/nginx/certificates'), // certificates
@@ -21,7 +31,8 @@ const [Page, Nginx, Certificates, Domains, Login, NotFound, Auth, CertificateMon
   () => import('@/pages/login/index'), // login
   () => import('@/components/NotFound/index'), //404
   () => import('@/pages/auth'), //系统管理
-  () => import('@/pages/nginx/certificateMonitoring')
+  () => import('@/pages/nginx/certificateMonitoring'),
+  () => import('@/pages/nginx/certificates/applycert') //applycert
 ].map((item) =>
   loadable(item as any, {
     fallback: <div>Loading...</div>
@@ -60,16 +71,16 @@ const router = [
       },
       {
         path: '/nginx-management',
-        element: <CertificateMonitoring />,
+        element: <Nginx />,
         children: [
           {
             path: '',
             element: <CertificateMonitoring />,
           },
-          // {
-          //   path: 'certificates',
-          //   element: <Certificates />,
-          // },
+          {
+            path: 'certificates',
+            element: <Certificates />,
+          },
           // {
           //   path: 'domains',
           //   element: <Domains />,
@@ -78,6 +89,11 @@ const router = [
             path: 'certificate-monitoring',
             element: <CertificateMonitoring />
           },
+          {
+            path: 'certificate-applycert',
+            element: <Applycert />
+
+          }
         ]
       },
       {

@@ -23,7 +23,7 @@ import {
     getCertificateMonitoringList,
     updataTime
 } from '@/api';
-import { AddCertificateMonitor, CertificateMonitoring } from '@/type';
+import { CertificateMonitoring } from '@/type';
 import { DownOutlined, EllipsisOutlined } from '@ant-design/icons';
 import { useRequest } from 'ahooks';
 
@@ -45,7 +45,7 @@ const Page = () => {
     const [list, setList] = useState<CertificateMonitoring[] | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const tableRef = useRef<ActionType>();
-    const { run } = useRequest((data) => addCertificateMonitoring(data), {
+    const { run, loading } = useRequest((data) => addCertificateMonitoring(data), {
         manual: true,
         onSuccess: ({ status }) => {
             if (status !== 200) {
@@ -222,7 +222,6 @@ const Page = () => {
         );
     };
 
-    const submit = (value: AddCertificateMonitor) => run(value);
     return (
         <div>
             <ProTable
@@ -263,7 +262,8 @@ const Page = () => {
                     className="max-w-9/10 mx-auto mt-5"
                     labelCol={{ span: 8 }}
                     wrapperCol={{ span: 16 }}
-                    onFinish={submit}
+                    onFinish={run}
+                    disabled={loading}
                 >
                     <Form.Item
                         label="主机域名"

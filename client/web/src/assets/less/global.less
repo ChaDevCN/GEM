@@ -2,7 +2,8 @@
 @layer base {
     :root{
         --card-foreground: 224 71.4% 4.1%;
-        --header:#fff;
+        --header:white;
+        --primary: #7c3aed;
     }
     .dark{
         --card-foreground: 210 20% 98%;
@@ -15,4 +16,7 @@
 }
 .dark::view-transition-old(root){
   z-index: 9999;
+}
+.ant-layout-header{
+  background-color: var(--header);
 }

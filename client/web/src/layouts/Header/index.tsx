@@ -1,17 +1,9 @@
-/*
- * @Author: Charlie <charlie.l1u@outlook.com>
- * @Date: 2024-08-20 22:44:53
- * @LastEditors: Charlie <charlie.l1u@outlook.com>
- * @LastEditTime: 2024-08-25 22:01:29
- * @FilePath: \GEM\client\web\src\layouts\Header\index.tsx
- * @Description: Willing to work myself to death, just to outperform others.
- */
-import React from 'react';
+import React, { useRef } from 'react';
 import { useNavigate } from "react-router-dom"
 import { observer } from 'mobx-react-lite';
 
-import { Layout, Button, Switch, Space, Dropdown } from 'antd';
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { Layout, Button, Switch, Space, Dropdown, Avatar } from 'antd';
+import { MenuFoldOutlined, MenuUnfoldOutlined, BulbOutlined, SunOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { useStores } from '@/store';
 
@@ -48,12 +40,14 @@ const Header = ({
 		},
 	];
 	const {
-		globalStore: { setTheme, userInfo }
+		globalStore: { setTheme, userInfo, appearance }
 	} = useStores();
+	const checked = useRef<boolean>(true)
 	const onChange = (
 		checked: boolean,
 		e: React.MouseEvent<HTMLButtonElement>
 	) => {
+
 		const value = checked ? 'light' : 'dark';
 
 		const transition = (document as DocumentNew).startViewTransition(() => {
@@ -90,9 +84,11 @@ const Header = ({
 				);
 			});
 	};
+	const ColorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
+	const getReandomColor = () => ColorList[Math.floor(Math.random() * ColorList.length)]
 	return (
-		<AntHeader className="bg-header">
-			<div className="flex justify-between bg-header">
+		<AntHeader>
+			<div className="flex justify-between">
 				<Button
 					type="text"
 					icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -103,12 +99,18 @@ const Header = ({
 						height: 64
 					}}
 				/>
-				<Space className="mr-5 flex items-center">
-					<div>{userInfo?.username}</div>
-					<Dropdown menu={{ items }}>
-						<div>{userInfo?.username || '韭菜'}</div>
+				<Space className='mr-5' align='center' size={'middle'}>
+					<Dropdown menu={{ items }} placement="bottom" arrow trigger={['click']}>
+						<Avatar style={{ background: getReandomColor() }} className='mb-1 cursor-pointer'>{userInfo?.username[0]}</Avatar>
 					</Dropdown>
-					<Switch defaultChecked onChange={onChange} />
+					<Button
+						icon={appearance === 'dark' ? <SunOutlined /> : <BulbOutlined />}
+						onClick={(e) => {
+							checked.current = !checked.current
+							onChange(checked.current, e as any);
+						}}
+						className='mt-2'
+					/>
 				</Space>
 			</div>
 		</AntHeader>

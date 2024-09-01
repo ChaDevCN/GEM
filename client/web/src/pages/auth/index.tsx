@@ -1,32 +1,44 @@
-import { Tabs, Spin } from "antd"
-import { useRequest } from "ahooks"
-import User from "./components/User";
-import Role from "./components/Role";
+import { Tabs } from "antd"
+import { ProTable } from '@ant-design/pro-components';
 import type { TabsProps } from 'antd'
 import { getUserList } from "@/api";
 import { Userlist } from "@/type";
-
+import React from "react";
+type Length = 1 | 2
 const Auth = () => {
-    const { loading } = useRequest(getUserList<Userlist>, {
-        onSuccess: ({ }) => {
-
-        }
-    })
+    const getData = (length: Length) => [getUserList,]
     const items: TabsProps['items'] = [
         {
             key: '1',
             label: '用户中心',
-            children: <User />,
         },
         {
             key: '2',
             label: '角色设置',
-            children: <Role />,
         },
     ];
     const onChange = (key: string) => {
         console.log(key);
     };
-    return <Spin spinning={loading}><Tabs defaultActiveKey="1" items={items} onChange={onChange} /></Spin>
+    return (
+        <React.Fragment>
+            <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+            <ProTable request={
+                async () => {
+                    let { status, data } = await getUserList<Userlist>()
+                    if (status === 200) {
+                        data.items = []
+                    }
+                    return {
+                        total: data.meta.totalCounts,
+                        data: data.items,
+                        success: true,
+
+                    }
+                }
+            } />
+        </React.Fragment>
+
+    )
 }
 export default Auth

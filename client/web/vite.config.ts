@@ -2,9 +2,13 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import unocss from 'unocss/vite';
 import path from 'path';
+import CompressionPlugin from 'vite-plugin-compression';
+import removeConsole from 'vite-plugin-remove-console';
+import { visualizer } from "rollup-plugin-visualizer"
 export default defineConfig({
 	plugins: [
 		react(),
+		removeConsole(),
 		unocss({
 			theme: {
 				colors: {
@@ -16,6 +20,16 @@ export default defineConfig({
 					}
 				}
 			}
+		}),
+		CompressionPlugin({
+			verbose: true,
+			threshold: 1025,
+			filter: /\.(js|mjs|json|css|html)$/i,
+			disable: false,
+			algorithm: 'gzip',
+			ext: '.gz',
+			compressionOptions: { level: 7 },
+			deleteOriginFile: false
 		})
 	],
 	resolve: {
@@ -38,6 +52,15 @@ export default defineConfig({
 		}
 	},
 	build: {
-		outDir: path.resolve(__dirname, '../../dist/client')
+		outDir: path.resolve(__dirname, '../../dist/client'),
+		chunkSizeWarningLimit: 500,
+		cssCodeSplit: true,
+		assetsInlineLimit: 10000,
+		terserOptions: {
+			compress: {
+				drop_console: true,
+				drop_debugger: true
+			}
+		},
 	}
 });
