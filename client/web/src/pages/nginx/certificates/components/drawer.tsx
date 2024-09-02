@@ -8,7 +8,8 @@ interface Props {
         open: boolean
         setOpen: React.Dispatch<React.SetStateAction<boolean>>
         loading?: boolean
-        type: 'add' | 'edit'
+        type: 'add' | 'edit',
+        run: (data: any) => void;
     }
 
 }
@@ -16,15 +17,11 @@ const title = {
     add: '证书申请',
     edit: '编辑证书',
 }
-const Index = ({ options: { open, setOpen, loading = false, type } }: Props) => {
+const Index = ({ options: { open, setOpen, loading = false, type, run } }: Props) => {
 
-    const onFinish = (values) => {
-        console.log(values);
-
-    }
     return (
-        <Drawer open={open} closable destroyOnClose onClose={() => setOpen(false)} loading={loading} title={title[type]}>
-            <ProForm onFinish={onFinish}>
+        <Drawer open={open} closable destroyOnClose onClose={() => setOpen(false)} title={title[type]}>
+            <ProForm onFinish={run} disabled={loading} loading={loading}>
                 <ProFormGroup>
                     <ProFormText
                         width="md"
@@ -47,7 +44,7 @@ const Index = ({ options: { open, setOpen, loading = false, type } }: Props) => 
                     <ProFormSelect
                         label='加密类型'
                         width="md"
-                        name="algorithm"
+                        name="encryptionType"
                         options={
                             [
                                 {
@@ -71,12 +68,12 @@ const Index = ({ options: { open, setOpen, loading = false, type } }: Props) => 
                         rules={[{ required: true, message: '请选择加密类型' }]}
                     />
                     <ProFormSelect
-                        name="certificateVendor"
+                        name="certificateAuthority"
                         label='证书厂商'
                         width='md'
                         options={[
                             {
-                                value: `Let\'s Encrypt`,
+                                value: `LetsEncrypt`,
                                 label: 'Let\'s Encrypt',
                             }
                         ]}

@@ -17,6 +17,7 @@ import dayjs from 'dayjs';
 import { ProTable } from '@ant-design/pro-components';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { type MenuProps } from 'antd';
+import { EllipsisText } from "@/components"
 
 import {
     addCertificateMonitoring,
@@ -36,11 +37,6 @@ const statusColors = {
     invalid: 'error',
     unknown: 'default'
 };
-const EllipsisText = ({ text, children }: { text: string, children: React.ReactNode }) => (
-    <Tooltip placement="top" title={text}>
-        {children}
-    </Tooltip>
-)
 const Page = () => {
     const [list, setList] = useState<CertificateMonitoring[] | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);

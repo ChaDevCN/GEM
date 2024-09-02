@@ -4,11 +4,11 @@
   "description": "code....",
   "scripts": {
     "dev": "turbo run dev",
-    "build":"turbo run build",
+    "build": "turbo run build",
     "start:ssl": "cross-env RUNNING_ENV=dev nest start ssl --watch",
     "start:user": "cross-env RUNNING_ENV=dev nest start --watch user-server",
-    "build:ssl":"cross-env RUNNING_ENV=prod nest build  ssl",
-    "build:user":"cross-env RUNNING_ENV=prod nest build user-server"
+    "build:ssl": "cross-env RUNNING_ENV=prod nest build  ssl",
+    "build:user": "cross-env RUNNING_ENV=prod nest build user-server"
   },
   "dependencies": {
     "@nestjs/cache-manager": "^2.2.2",
@@ -23,6 +23,7 @@
     "@nestjs/swagger": "^7.4.0",
     "@nestjs/typeorm": "^10.0.2",
     "@types/cache-manager": "^4.0.6",
+    "acme-client": "^5.4.0",
     "axios": "^1.7.2",
     "babel-loader": "^9.1.3",
     "cache-manager": "^5.7.3",

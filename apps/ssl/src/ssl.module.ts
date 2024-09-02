@@ -9,6 +9,7 @@ import { AuthModule } from "./auth/auth.module";
 import { PermissionGuard } from "./auth/guards/permission.guard";
 import { JwtAuthGuard } from "./auth/guards/jwt-auth.guard";
 import { MonitorModule } from "./monitor/monitor.module"
+import { CertMoudle } from "./cert-ops/acme.module";
 
 @Module({
     imports: [
@@ -23,7 +24,8 @@ import { MonitorModule } from "./monitor/monitor.module"
         MicroservicesModule,
         AuthModule,
         DatabaseModule,
-        MonitorModule
+        MonitorModule,
+        CertMoudle
     ],
     controllers: [],
     providers: [
