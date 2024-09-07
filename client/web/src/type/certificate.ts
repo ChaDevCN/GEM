@@ -46,8 +46,10 @@ export interface Order {
 }
 
 export interface Identifier {
-    type: string
-    value: string
+    type: string;
+    value: string;
+    token: string;
+    url: string;
 }
 
 export type AccoutItem = {
@@ -60,3 +62,9 @@ export type AccoutItem = {
     orders: Order[]
 }
 export type AccoutList = AccoutItem[]
+
+export type CertificateRenewal = {
+    email: string
+    domain: string
+    renewalDaysBeforeExpiry: number
+}

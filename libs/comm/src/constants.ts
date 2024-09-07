@@ -13,3 +13,10 @@ export const jwtConstants = {
 export const IS_PUBLIC_KEY = 'isPublic';
 
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
+
+export const NGINX_PATH = `D:\\tools\\nginx-1.26.1`
+
+export const ACME_PATH = `acme-challenge`
+
+export const SSL_PATH = `ssl`
+

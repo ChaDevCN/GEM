@@ -1,5 +1,5 @@
 
-import { Accout, AddCertificateMonitor } from "@/type";
+import { Accout, AddCertificateMonitor, CertificateRenewal } from "@/type";
 import request from "../request";
 
 export const getCertificateMonitoringList = async <T>() =>
@@ -32,4 +32,14 @@ export const getAccount = async <T>() =>
     await request<T>({
         method: 'get',
         url: '/api/v2/cert/account',
+    })
+
+export const createCertificateRenewal = async (data: CertificateRenewal) =>
+    await request({
+        method: 'post',
+        url: '/api/v2/cert/certificates/createl',
+        data: {
+            ...data,
+            autoRenew: true
+        }
     })

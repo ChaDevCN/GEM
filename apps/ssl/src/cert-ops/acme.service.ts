@@ -58,7 +58,34 @@ export class CertService {
 
             // 保存 AcmeAccount 实体
             savedAccount = await queryRunner.manager.save(AcmeAccount, account);
+            const authorizations = await client.getAuthorizations(acmeOrder);
+            const identifiers = acmeOrder.identifiers.map((identifier) => {
+                const auth = authorizations.find(auth => auth.identifier.value === identifier.value);
+                if (auth) {
+                    // 根据挑战类型处理
+                    const dnsChallenge = auth.challenges.find(challenge => challenge.type === 'dns-01');
+                    const httpChallenge = auth.challenges.find(challenge => challenge.type === 'http-01');
 
+                    // 处理 dns-01 挑战
+                    if (dnsChallenge) {
+                        return {
+                            ...identifier,
+                            token: dnsChallenge.token,
+                            url: dnsChallenge.url
+                        };
+                    }
+
+                    // 处理 http-01 挑战
+                    if (httpChallenge) {
+                        return {
+                            ...identifier,
+                            token: httpChallenge.token,
+                            url: httpChallenge.url
+                        };
+                    }
+                }
+                return identifier;
+            });
             // 构建 AcmeOrder 实体
             const order = new AcmeOrder();
             order.account = savedAccount;
@@ -66,7 +93,7 @@ export class CertService {
             order.status = acmeOrder.status;
             order.expires = new Date(acmeOrder.expires);
             order.finalizeUrl = acmeOrder.finalize;
-            order.identifiers = acmeOrder.identifiers;
+            order.identifiers = identifiers
 
             // 保存 AcmeOrder 实体
             savedOrder = await queryRunner.manager.save(AcmeOrder, order);
@@ -91,5 +118,9 @@ export class CertService {
         return await this.acmeAccountRepository.find({
             relations: ["orders"]
         });
+    }
+
+    async pollChallengeStatus(orderId: number) {
+
     }
 }

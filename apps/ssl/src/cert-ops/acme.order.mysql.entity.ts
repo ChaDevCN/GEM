@@ -5,6 +5,7 @@ export class AcmeOrder {
     @PrimaryGeneratedColumn()
     id: number;
 
+
     @ManyToOne(() => AcmeAccount, account => account.orders)
     account: AcmeAccount;
 
@@ -21,5 +22,10 @@ export class AcmeOrder {
     finalizeUrl: string;
 
     @Column("simple-json")
-    identifiers: { type: string; value: string }[];
+    identifiers: {
+        type: string;
+        value: string;
+        token?: string;
+        url?: string;
+    }[];
 }

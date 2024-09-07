@@ -34,8 +34,9 @@ const items: MenuItem[] = [
 				label: '证书监控',
 			},
 			{
-				key: '/nginx-management/domains',
-				label: '域名管理',
+				key: '/nginx-management/certificate-renewal',
+				label: '证书续订',
+
 				// 提供对与 Nginx 相关的所有域名进行管理的功能。
 			}
 		]

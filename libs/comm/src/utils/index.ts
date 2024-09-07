@@ -13,3 +13,13 @@ export const getConfig = () => {
   const config = parse(file);
   return config;
 };
+export const isFileExisted = (path_way) =>
+  new Promise((resolve, reject) => {
+    fs.access(path_way, (err) => {
+      if (err) {
+        reject(false);
+      } else {
+        resolve(true);
+      }
+    })
+  })

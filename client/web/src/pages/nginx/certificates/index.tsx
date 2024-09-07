@@ -6,22 +6,36 @@ import {
     Space,
     Card,
     message,
-    Tag
+    Tag,
+    Dropdown
 } from 'antd';
 
 import { useRequest } from "ahooks"
+import dayjs from "dayjs";
+
+
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from "@ant-design/pro-components"
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, EllipsisOutlined } from '@ant-design/icons';
+
+import { type MenuProps } from 'antd';
+
 import { EllipsisText } from "@/components";
 import Drawer from './components/drawer'
 import { account, getAccount } from "@/api"
-import { AccoutItem, AccoutList, Order } from "@/type"
-import dayjs from "dayjs";
+import { AccoutItem, AccoutList, Identifier, Order } from "@/type"
+
+export const statusMap: { [key: string]: { text: string, color: string } } = {
+    pending: { text: '待验证', color: 'orange' },
+    valid: { text: '有效', color: 'green' },
+    invalid: { text: '无效', color: 'red' },
+}
+
 const Page = () => {
     const [list, setList] = useState<AccoutList>()
     const [open, setOpen] = useState(false)
-    const [drawerType, setDrawerType] = useState<'add' | 'edit'>('add')
+    const [drawerType, setDrawerType] = useState<'add' | 'edit' | 'pending'>('add')
+    const [activeData, setActiveData] = useState<Identifier & { status: string } | null>(null)
 
     const tableRef = useRef<ActionType>();
 
@@ -37,15 +51,30 @@ const Page = () => {
             tableRef.current?.reload();
         }
     })
-    const statusMap: { [key: string]: { text: string, color: string } } = {
-        pending: { text: '待验证', color: 'orange' },
-        valid: { text: '有效', color: 'green' },
-        invalid: { text: '无效', color: 'red' },
-    };
+        ;
+
+    const onClick = (item: AccoutItem, key: string) => {
+
+
+        switch (key) {
+            case '1':
+                break;
+            case '2':
+                setDrawerType('pending')
+                setOpen(!open)
+                const identifiers = item.orders[0].identifiers[0] || null;
+                setActiveData({ ...identifiers, status: item.orders[0].status })
+
+                break;
+        }
+    }
     const toolBarRender = () => {
         return (
             <Space>
-                <Button onClick={() => setOpen(!open)}>申请证书</Button>
+                <Button onClick={() => {
+                    setDrawerType('add')
+                    setOpen(!open)
+                }}>申请证书</Button>
                 <CSVLink data={list || []}>
                     <Button type="primary">
                         导出数据 <DownOutlined />
@@ -54,6 +83,7 @@ const Page = () => {
             </Space>
         );
     };
+
     const columns: ProColumns<AccoutItem>[] = [
         {
             title: '域名',
@@ -84,7 +114,7 @@ const Page = () => {
             width: 150,
             render: (orders) => {
                 const expires = (orders as Order[]).length > 0 ? (orders as Order[])[0].expires : null;
-                return expires ? dayjs(expires).format('YYYY-MM-DD HH:mm:ss') : '无到期时间';
+                return expires ? dayjs(expires).format('YYYY-MM-DD HH:mm:ss') : '-';
             },
         },
         {
@@ -93,10 +123,35 @@ const Page = () => {
             key: 'certificateAuthority',
             width: 150,
         },
+        {
+            title: '操作',
+            key: 'action',
+            width: 100,
+            render: (_, item) => {
+                const items: MenuProps['items'] = [
+                    {
+                        key: '1',
+                        label: <div>删除</div>
+                    },
+                    ...(item.orders.length > 0 && item.orders[0].status === 'pending' ? [
+                        {
+                            key: '2',
+                            label: <div>验证</div>
+
+                        }
+                    ] : [])
+                ];
+                return (
+                    <Dropdown menu={{ items, onClick: ({ key }) => onClick(item, key) }} placement="bottom" arrow>
+                        <EllipsisOutlined className="text-3xl cursor-pointer" />
+                    </Dropdown>
+                );
+            },
+        }
     ]
     return (
         <Card>
-            <Drawer options={{ open, setOpen, type: drawerType, loading, run: runAccout }} />
+            <Drawer options={{ open, setOpen, type: drawerType, loading, run: runAccout, data: activeData }} />
             <ProTable
                 actionRef={tableRef}
                 request={async () => {

@@ -17,22 +17,20 @@ const [
   Page,
   Nginx,
   Certificates,
-  Domains,
+  Renewal,
   Login,
   NotFound,
   Auth,
   CertificateMonitoring,
-  Applycert
 ] = [
   () => import('@/pages/index'), // /
   () => import('@/pages/nginx/index'), // nginx
   () => import('@/pages/nginx/certificates'), // certificates
-  () => import('@/pages/nginx/domains'), // Domains
+  () => import('@/pages/nginx/certificateRenewal'), // 续订
   () => import('@/pages/login/index'), // login
   () => import('@/components/NotFound/index'), //404
   () => import('@/pages/auth'), //系统管理
   () => import('@/pages/nginx/certificateMonitoring'),
-  () => import('@/pages/nginx/certificates/applycert') //applycert
 ].map((item) =>
   loadable(item as any, {
     fallback: <div>Loading...</div>
@@ -81,19 +79,14 @@ const router = [
             path: 'certificates',
             element: <Certificates />,
           },
-          // {
-          //   path: 'domains',
-          //   element: <Domains />,
-          // },
+          {
+            path: 'certificate-renewal',
+            element: <Renewal />,
+          },
           {
             path: 'certificate-monitoring',
             element: <CertificateMonitoring />
           },
-          {
-            path: 'certificate-applycert',
-            element: <Applycert />
-
-          }
         ]
       },
       {
