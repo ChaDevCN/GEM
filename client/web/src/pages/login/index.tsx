@@ -1,11 +1,4 @@
-/*
- * @Author: Charlie <charlie.l1u@outlook.com>
- * @Date: 2024-08-24 22:53:02
- * @LastEditors: Charlie <charlie.l1u@outlook.com>
- * @LastEditTime: 2024-08-25 21:44:25
- * @FilePath: \GEM\client\web\src\pages\login\index.tsx
- * @Description: Willing to work myself to death, just to outperform others.
- */
+
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from "react-router-dom"

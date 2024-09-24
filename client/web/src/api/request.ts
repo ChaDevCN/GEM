@@ -1,11 +1,3 @@
-/*
- * @Author: Charlie <charlie.l1u@outlook.com>
- * @Date: 2024-08-20 22:44:53
- * @LastEditors: Charlie <charlie.l1u@outlook.com>
- * @LastEditTime: 2024-08-25 20:52:38
- * @FilePath: \GEM\client\web\src\api\request.ts
- * @Description: Willing to work myself to death, just to outperform others.
- */
 
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
@@ -19,6 +11,9 @@ import {
 } from 'axios';
 import { type RequestResponse } from '@/type';
 import { message } from 'antd';
+interface CustomAxiosRequestConfig extends AxiosRequestConfig {
+	disableRetry?: boolean;
+}
 const whiteRetry = new Set(['ECONNABORTED', undefined, 0]);
 
 const serviceAxios = axios.create({
@@ -40,6 +35,10 @@ axiosRetry(serviceAxios, {
 		return retryCount * 10000;
 	},
 	retryCondition: (err) => {
+		const config = err.config as CustomAxiosRequestConfig
+		if (config.disableRetry) {
+			return false
+		}
 		const { code, message } = err;
 		return whiteRetry.has(<string>code) || message.includes('timeout');
 	}
@@ -64,7 +63,6 @@ serviceAxios.interceptors.response.use(
 				message.error('信息有误，请重新登录')
 				return response.data
 			default:
-				message.error(response.data.message)
 				return response.data
 		}
 	},
@@ -74,7 +72,7 @@ serviceAxios.interceptors.response.use(
 );
 
 function createRequest(service: AxiosInstance) {
-	return function <T>(config: AxiosRequestConfig): Promise<RequestResponse<T>> {
+	return function <T>(config: CustomAxiosRequestConfig): Promise<RequestResponse<T>> {
 		return service(config);
 	};
 }

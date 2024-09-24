@@ -37,9 +37,24 @@ export const getAccount = async <T>() =>
 export const createCertificateRenewal = async (data: CertificateRenewal) =>
     await request({
         method: 'post',
-        url: '/api/v2/cert/certificates/createl',
+        url: '/api/v2/certificates/create',
         data: {
             ...data,
             autoRenew: true
-        }
+        },
+        timeout: 10 * 1000,
+        disableRetry: true
+    })
+
+export const verifyDnsChallenge = async <T>(id: number) =>
+    await request<T>({
+        method: 'post',
+        url: `/api/v2/cert/account/${id}`
+    })
+
+
+export const deleteAcmeAccount = async (id: number) =>
+    await request({
+        method: 'delete',
+        url: `/api/v2/cert/account/${id}`
     })

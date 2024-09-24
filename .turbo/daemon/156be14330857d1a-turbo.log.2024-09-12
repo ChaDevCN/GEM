@@ -1,0 +1,66 @@
+2024-09-12T09:42:42.908840Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo\\cookies\\1.cookie"), AnchoredSystemPathBuf(".turbo\\cookies")}
+2024-09-12T09:42:42.908890Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-09-12T09:42:44.102039Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo\\daemon")}
+2024-09-12T09:42:44.102054Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-09-12T09:42:44.194091Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("client\\web"), AnchoredSystemPathBuf("client\\web\\vite.config.ts.timestamp-1726134164144-e96f50a016d9b.mjs")}
+2024-09-12T09:42:44.194106Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("gem-web"), path: AnchoredSystemPathBuf("client\\web") }}))
+2024-09-12T09:42:45.794643Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("client\\web"), AnchoredSystemPathBuf("client\\web\\vite.config.ts.timestamp-1726134164144-e96f50a016d9b.mjs")}
+2024-09-12T09:42:45.794684Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("gem-web"), path: AnchoredSystemPathBuf("client\\web") }}))
+2024-09-12T09:43:13.704157Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo\\daemon\\156be14330857d1a-turbo.log.2024-09-12")}
+2024-09-12T09:43:13.704172Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-09-12T10:41:43.607307Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("client\\web\\src\\api\\request.ts")}
+2024-09-12T10:41:43.608949Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("gem-web"), path: AnchoredSystemPathBuf("client\\web") }}))
+2024-09-12T10:41:43.803947Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("client\\web\\src\\api\\request.ts")}
+2024-09-12T10:41:43.803979Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("gem-web"), path: AnchoredSystemPathBuf("client\\web") }}))
+2024-09-12T10:41:43.804058Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-09-12T10:42:10.705137Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("client\\web\\src\\api\\request.ts")}
+2024-09-12T10:42:10.705162Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("gem-web"), path: AnchoredSystemPathBuf("client\\web") }}))
+2024-09-12T10:42:33.598636Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("client\\web\\src\\api\\request.ts")}
+2024-09-12T10:42:33.598657Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("gem-web"), path: AnchoredSystemPathBuf("client\\web") }}))
+2024-09-12T10:42:50.798352Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("client\\web\\src\\api\\request.ts")}
+2024-09-12T10:42:50.798369Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("gem-web"), path: AnchoredSystemPathBuf("client\\web") }}))
+2024-09-12T10:42:59.804357Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("client\\web\\src\\api\\request.ts")}
+2024-09-12T10:42:59.804379Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("gem-web"), path: AnchoredSystemPathBuf("client\\web") }}))
+2024-09-12T10:45:56.303769Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("client\\web\\src\\api\\certificate\\index.ts")}
+2024-09-12T10:45:56.303789Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("gem-web"), path: AnchoredSystemPathBuf("client\\web") }}))
+2024-09-12T10:45:56.516838Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("client\\web\\src\\api\\certificate\\index.ts")}
+2024-09-12T10:45:56.516855Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("gem-web"), path: AnchoredSystemPathBuf("client\\web") }}))
+2024-09-12T10:45:56.516901Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-09-12T10:46:08.694958Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\ssl\\src\\certificate-renewal\\certificate.service.ts")}
+2024-09-12T10:46:08.694978Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ssl"), path: AnchoredSystemPathBuf("apps\\ssl") }}))
+2024-09-12T10:46:26.508503Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\ssl\\src\\certificate-renewal\\certificate.service.ts")}
+2024-09-12T10:46:26.508518Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ssl"), path: AnchoredSystemPathBuf("apps\\ssl") }}))
+2024-09-12T10:46:56.598881Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\ssl\\src\\certificate-renewal\\certificate.service.ts")}
+2024-09-12T10:46:56.598900Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ssl"), path: AnchoredSystemPathBuf("apps\\ssl") }}))
+2024-09-12T10:47:09.405981Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\ssl\\src\\certificate-renewal\\certificate.service.ts")}
+2024-09-12T10:47:09.405999Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ssl"), path: AnchoredSystemPathBuf("apps\\ssl") }}))
+2024-09-12T10:47:23.093969Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\ssl\\src\\certificate-renewal\\certificate.service.ts")}
+2024-09-12T10:47:23.093988Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ssl"), path: AnchoredSystemPathBuf("apps\\ssl") }}))
+2024-09-12T10:47:52.198543Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\ssl\\src\\certificate-renewal\\certificate.service.ts")}
+2024-09-12T10:47:52.198560Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ssl"), path: AnchoredSystemPathBuf("apps\\ssl") }}))
+2024-09-12T10:48:05.106802Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\ssl\\src\\certificate-renewal\\certificate.service.ts")}
+2024-09-12T10:48:05.106837Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ssl"), path: AnchoredSystemPathBuf("apps\\ssl") }}))
+2024-09-12T10:48:12.794707Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\ssl\\src\\certificate-renewal\\certificate.service.ts")}
+2024-09-12T10:48:12.794730Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ssl"), path: AnchoredSystemPathBuf("apps\\ssl") }}))
+2024-09-12T10:48:31.097817Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\ssl\\src\\certificate-renewal\\certificate.service.ts")}
+2024-09-12T10:48:31.097844Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ssl"), path: AnchoredSystemPathBuf("apps\\ssl") }}))
+2024-09-12T10:48:35.599931Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\ssl\\src\\certificate-renewal\\certificate.service.ts")}
+2024-09-12T10:48:35.599949Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ssl"), path: AnchoredSystemPathBuf("apps\\ssl") }}))
+2024-09-12T10:48:38.394231Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\ssl\\src\\certificate-renewal\\certificate.service.ts")}
+2024-09-12T10:48:38.394254Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ssl"), path: AnchoredSystemPathBuf("apps\\ssl") }}))
+2024-09-12T10:48:52.095562Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\ssl\\src\\certificate-renewal\\certificate.service.ts")}
+2024-09-12T10:48:52.095578Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ssl"), path: AnchoredSystemPathBuf("apps\\ssl") }}))
+2024-09-12T10:48:52.203377Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\ssl\\src\\certificate-renewal\\certificate.service.ts")}
+2024-09-12T10:48:52.203408Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ssl"), path: AnchoredSystemPathBuf("apps\\ssl") }}))
+2024-09-12T10:48:52.203477Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-09-12T10:49:06.097836Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\ssl\\src\\certificate-renewal\\certificate.service.ts")}
+2024-09-12T10:49:06.097852Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ssl"), path: AnchoredSystemPathBuf("apps\\ssl") }}))
+2024-09-12T10:49:13.806849Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\ssl\\src\\certificate-renewal\\certificate.service.ts")}
+2024-09-12T10:49:13.806894Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ssl"), path: AnchoredSystemPathBuf("apps\\ssl") }}))
+2024-09-12T10:49:35.995056Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\ssl\\src\\certificate-renewal\\certificate.service.ts")}
+2024-09-12T10:49:35.995147Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ssl"), path: AnchoredSystemPathBuf("apps\\ssl") }}))
+2024-09-12T10:49:36.118151Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\ssl\\src\\certificate-renewal\\certificate.service.ts")}
+2024-09-12T10:49:36.118221Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ssl"), path: AnchoredSystemPathBuf("apps\\ssl") }}))
+2024-09-12T10:49:36.118319Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-09-12T10:50:02.104664Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps\\ssl\\src\\certificate-renewal\\certificate.service.ts")}
+2024-09-12T10:50:02.104682Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ssl"), path: AnchoredSystemPathBuf("apps\\ssl") }}))

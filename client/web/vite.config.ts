@@ -17,6 +17,9 @@ export default defineConfig({
 					},
 					header: {
 						DEFAULT: 'hsl(var(--header))'
+					},
+					primary: {
+						DEFAULT: 'hsl(var(--primary))'
 					}
 				}
 			}
@@ -39,15 +42,23 @@ export default defineConfig({
 	},
 	server: {
 		proxy: {
+			// user
 			'/api/v1': {
 				target: 'http://127.0.0.1:40001',
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/api\/v1/, '/api')
 			},
+			// ssl
 			'/api/v2': {
 				target: 'http://127.0.0.1:40002',
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/api\/v2/, '/api')
+			},
+			// tenapi
+			'/api/v3': {
+				target: 'https://tenapi.cn',
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/api\/v3/, '')
 			}
 		}
 	},

@@ -1,19 +1,21 @@
 
 import React from "react"
-import { Descriptions, Drawer, Tag } from "antd"
+import { Descriptions, Drawer, message, Tag, type DescriptionsProps } from "antd"
 import { ProForm, ProFormGroup, ProFormSelect, ProFormText } from "@ant-design/pro-components"
-import type { DescriptionsProps } from 'antd';
+import { CopyOutlined } from "@ant-design/icons"
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Identifier } from "@/type"
-import { statusMap } from "../index"
+import { type DrawerType, statusMap } from "../index"
 
 interface Props {
     options: {
         open: boolean
         setOpen: React.Dispatch<React.SetStateAction<boolean>>
         loading?: boolean
-        type: 'add' | 'edit' | 'pending',
+        type: DrawerType,
         run: (data: any) => void;
         data?: Identifier & { status: string } | null
+        closeCallback: () => void
     }
 
 }
@@ -22,7 +24,11 @@ const title = {
     edit: '编辑证书',
     pending: '验证中'
 }
-const Index = ({ options: { open, setOpen, loading = false, type, run, data } }: Props) => {
+const Index = ({ options: { open, setOpen, loading = false, type, run, data, closeCallback } }: Props) => {
+    const onClose = () => {
+        closeCallback && closeCallback()
+        setOpen(false)
+    }
     const items: DescriptionsProps['items'] = [
         {
             key: '0',
@@ -37,7 +43,12 @@ const Index = ({ options: { open, setOpen, loading = false, type, run, data } }:
         {
             key: '2',
             label: '主机记录',
-            children: `_acme-challenge.${data?.value.split('.')[0]}`
+            children: <div>
+                {`_acme-challenge.${data?.value.split('.')[0]}`}
+                <CopyToClipboard text={`_acme-challenge.${data?.value.split('.')[0]}` || '复制失败'} onCopy={() => message.success('复制成功')}>
+                    <CopyOutlined className="ml-1" />
+                </CopyToClipboard>
+            </div >
         },
         {
             key: '3',
@@ -47,11 +58,16 @@ const Index = ({ options: { open, setOpen, loading = false, type, run, data } }:
         {
             key: '4',
             label: '记录值',
-            children: data?.token
+            children: <div>
+                {data?.dns}
+                <CopyToClipboard text={data?.dns || '复制失败'} onCopy={() => message.success('复制成功')}>
+                    <CopyOutlined className="ml-1" />
+                </CopyToClipboard>
+            </div>
         }
     ]
     return (
-        <Drawer open={open} closable destroyOnClose onClose={() => setOpen(false)} title={title[type]} maskClosable={false}>
+        <Drawer open={open} closable destroyOnClose onClose={onClose} title={title[type]} maskClosable={false}>
             {
                 type === 'add' && <ProForm onFinish={run} disabled={loading} loading={loading}>
                     <ProFormGroup>

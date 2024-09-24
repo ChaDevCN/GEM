@@ -6,11 +6,9 @@ import {
     Delete,
     Body,
     Param,
-    UseGuards,
     Request,
     ParseIntPipe,
     NotFoundException,
-    Query
 } from '@nestjs/common';
 import { CertificateMonitoringService } from './monitor.service';
 import {

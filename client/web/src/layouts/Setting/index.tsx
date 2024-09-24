@@ -23,11 +23,11 @@ const items: MenuItem[] = [
 	{
 		key: '/nginx-management',
 		icon: <LockOutlined />,
-		label: 'Nginx 管理',
+		label: '服务中心',
 		children: [
 			{
 				key: '/nginx-management/certificates',
-				label: '证书管理',
+				label: '证书订单',
 			},
 			{
 				key: '/nginx-management/certificate-monitoring',
@@ -98,7 +98,7 @@ const Menu = ({ collapsed }: { collapsed: boolean }) => {
 	return (
 		<AntSider
 			collapsed={collapsed}
-			className=" h-[100vh] overflow-auto fixed left-0 top-0 bottom-0"
+			className=" h-[100vh] overflow-auto"
 			theme={'light'}
 		>
 			<div className="h-[60px] overflow-hidden text-xl flex justify-center items-center select-none text-card-foreground">

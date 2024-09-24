@@ -7,7 +7,8 @@ import {
     Card,
     message,
     Tag,
-    Dropdown
+    Dropdown,
+    type MenuProps
 } from 'antd';
 
 import { useRequest } from "ahooks"
@@ -18,12 +19,15 @@ import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from "@ant-design/pro-components"
 import { DownOutlined, EllipsisOutlined } from '@ant-design/icons';
 
-import { type MenuProps } from 'antd';
 
 import { EllipsisText } from "@/components";
 import Drawer from './components/drawer'
-import { account, getAccount } from "@/api"
-import { AccoutItem, AccoutList, Identifier, Order } from "@/type"
+import { account, deleteAcmeAccount, getAccount, verifyDnsChallenge } from "@/api"
+import type { AccoutItem, AccoutList, Identifier, Order } from "@/type"
+import { useKeyZipDownloader } from "@/hooks/useKeyZipDownloader";
+
+export type DrawerType = 'add' | 'edit' | 'pending'
+export type DnsInfo = Identifier & { status: string }
 
 export const statusMap: { [key: string]: { text: string, color: string } } = {
     pending: { text: '待验证', color: 'orange' },
@@ -34,11 +38,11 @@ export const statusMap: { [key: string]: { text: string, color: string } } = {
 const Page = () => {
     const [list, setList] = useState<AccoutList>()
     const [open, setOpen] = useState(false)
-    const [drawerType, setDrawerType] = useState<'add' | 'edit' | 'pending'>('add')
-    const [activeData, setActiveData] = useState<Identifier & { status: string } | null>(null)
-
+    const [drawerType, setDrawerType] = useState<DrawerType>('add')
+    const [activeData, setActiveData] = useState<DnsInfo | null>(null)
+    const downloadZip = useKeyZipDownloader();
     const tableRef = useRef<ActionType>();
-
+    // create
     const { run: runAccout, loading } = useRequest((data) => account(data), {
         manual: true,
         onSuccess: ({ status, message: msg }) => {
@@ -50,30 +54,78 @@ const Page = () => {
             }
             tableRef.current?.reload();
         }
+    });
+    // delete 
+    const { run: deleteAccount, loading: deleteLoading } = useRequest((id) => deleteAcmeAccount(id), {
+        manual: true,
+        onSuccess: ({ status, message: msg }) => {
+            if (status === 200) {
+                message.success('订单删除成功')
+                setOpen(false)
+            } else {
+                message.error(`${msg}`)
+            }
+            tableRef.current?.reload();
+        }
     })
-        ;
+    const { run: runDns, cancel } = useRequest((id) => verifyDnsChallenge<{ status: string }>(id), {
+        manual: true,
+        pollingInterval: 2000,
+        onSuccess: ({ data, status, message: msg }) => {
+            if (status === 200) {
+                if (data.status === 'success') {
+                    cancel()
+                }
+            } else {
+                message.error(`${msg}`)
+            }
+        }
+    })
+    const updateDrawerType = (type: DrawerType) => setDrawerType(type)
+
+    const updateActiveData = (data: DnsInfo) => setActiveData(data)
+
+    const toCheckValidity = (item: AccoutItem) => {
+        updateDrawerType('pending')
+        setOpen(true)
+        const identifiers = item.orders[0].identifiers[0] || null;
+        updateActiveData({ ...identifiers, status: item.orders[0].status })
+        runDns(item.orders[0].id)
+    }
+
 
     const onClick = (item: AccoutItem, key: string) => {
 
-
         switch (key) {
             case '1':
+                deleteAccount(item.id)
                 break;
             case '2':
-                setDrawerType('pending')
-                setOpen(!open)
-                const identifiers = item.orders[0].identifiers[0] || null;
-                setActiveData({ ...identifiers, status: item.orders[0].status })
-
-                break;
+                toCheckValidity(item)
+                return
+            case '3':
+                if (item.orders[0].identifiers[0].privateKey && item.orders[0].identifiers[0].certificate) {
+                    downloadZip({
+                        filename: item.domain,
+                        privateKey: item.orders[0].identifiers[0].privateKey,
+                        certificate: item.orders[0].identifiers[0].certificate,
+                    })
+                } else {
+                    message.error('下载证书出错了')
+                }
+                return
         }
     }
+    const closeCallback = () => {
+        cancel()
+    }
+
     const toolBarRender = () => {
         return (
             <Space>
                 <Button onClick={() => {
-                    setDrawerType('add')
-                    setOpen(!open)
+                    updateDrawerType('add')
+                    setOpen(true)
                 }}>申请证书</Button>
                 <CSVLink data={list || []}>
                     <Button type="primary">
@@ -108,7 +160,7 @@ const Page = () => {
             render: (_) => <EllipsisText text={_ as string}>{_}</EllipsisText>
         },
         {
-            title: '到期时间',
+            title: '订单结束时间',
             dataIndex: 'orders',
             key: 'expires',
             width: 150,
@@ -137,7 +189,12 @@ const Page = () => {
                         {
                             key: '2',
                             label: <div>验证</div>
-
+                        }
+                    ] : []),
+                    ...(item.orders.length > 0 && item.orders[0].status === 'valid' ? [
+                        {
+                            key: '3',
+                            label: <div>下载证书</div>
                         }
                     ] : [])
                 ];
@@ -151,7 +208,7 @@ const Page = () => {
     ]
     return (
         <Card>
-            <Drawer options={{ open, setOpen, type: drawerType, loading, run: runAccout, data: activeData }} />
+            <Drawer options={{ open, setOpen, type: drawerType, closeCallback, loading, run: runAccout, data: activeData }} />
             <ProTable
                 actionRef={tableRef}
                 request={async () => {
@@ -168,16 +225,17 @@ const Page = () => {
                         success: true
                     };
                 }}
-                headerTitle="证书管理"
+                headerTitle="订单中心"
                 search={false}
                 columns={columns}
-                scroll={{ x: 1300, y: 'calc(100vh - 342px)' }}
+                scroll={{ x: 1300, y: 'calc(100vh - 400px)' }}
                 toolBarRender={toolBarRender as any}
                 rowKey={'key'}
                 pagination={{
                     pageSize: 10,
                     showSizeChanger: false
-                }} />
+                }}
+                loading={deleteLoading || loading} />
         </Card>
     )
 }

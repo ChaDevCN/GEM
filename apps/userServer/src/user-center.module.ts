@@ -1,11 +1,4 @@
-/*
- * @Author: Charlie <charlie.l1u@outlook.com>
- * @Date: 2024-08-24 15:05:47
- * @LastEditors: Charlie <charlie.l1u@outlook.com>
- * @LastEditTime: 2024-08-24 22:31:25
- * @FilePath: \GEM\apps\user\src\user-center.module.ts
- * @Description: Willing to work myself to death, just to outperform others.
- */
+
 import { Module } from '@nestjs/common';
 
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';

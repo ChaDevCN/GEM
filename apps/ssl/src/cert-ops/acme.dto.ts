@@ -47,6 +47,11 @@ export class CreateOrderDto {
     accountId: number;
 }
 
+export class VerifyDnsChallengeDto {
+    @ApiProperty({ 'name': 'asd' })
+    orderId: number
+}
+
 export class AccountResponseDto {
     @ApiProperty({ example: 1 })
     id: number;

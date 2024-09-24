@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { AcmeAccount } from "./acme.account.mysql.entity"
+
 @Entity()
 export class AcmeOrder {
     @PrimaryGeneratedColumn()
@@ -26,6 +27,9 @@ export class AcmeOrder {
         type: string;
         value: string;
         token?: string;
+        dns?: string;
         url?: string;
+        certificate?: string
+        privateKey?: string
     }[];
 }

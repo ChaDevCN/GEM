@@ -50,6 +50,9 @@ export interface Identifier {
     value: string;
     token: string;
     url: string;
+    dns: string;
+    privateKey: string;
+    certificate: string;
 }
 
 export type AccoutItem = {
