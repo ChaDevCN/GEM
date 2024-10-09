@@ -68,7 +68,7 @@ const Page = () => {
             tableRef.current?.reload();
         }
     })
-    const { run: runDns, cancel } = useRequest((id) => verifyDnsChallenge<{ status: string }>(id), {
+    const { run: runDns, cancel, loading: chanllengeLoading } = useRequest((id) => verifyDnsChallenge<{ status: string }>(id), {
         manual: true,
         pollingInterval: 2000,
         onSuccess: ({ data, status, message: msg }) => {
@@ -235,7 +235,7 @@ const Page = () => {
                     pageSize: 10,
                     showSizeChanger: false
                 }}
-                loading={deleteLoading || loading} />
+                loading={deleteLoading || loading || chanllengeLoading} />
         </Card>
     )
 }

@@ -294,7 +294,4 @@ export class CertService {
         }
 
     }
-    async toOther() {
-
-    }
 }
