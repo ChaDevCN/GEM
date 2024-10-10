@@ -7,9 +7,9 @@ import { PrivilegeProviders } from './privilege.providers';
 import { PrivilegeService } from './privilege.service';
 
 @Module({
-  controllers: [PrivilegeController],
-  providers: [PrivilegeService, ...PrivilegeProviders],
-  imports: [DatabaseModule, SystemModule, ResourceModule],
-  exports: [PrivilegeService],
+	controllers: [PrivilegeController],
+	providers: [PrivilegeService, ...PrivilegeProviders],
+	imports: [DatabaseModule, SystemModule, ResourceModule],
+	exports: [PrivilegeService]
 })
 export class PrivilegeModule {}

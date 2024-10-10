@@ -1,4 +1,3 @@
-
 import { Module } from '@nestjs/common';
 
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
@@ -12,28 +11,28 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
-  imports: [
-    CacheModule.register({
-      isGlobal: true,
-    }),
-    ConfigModule.forRoot({
-      ignoreEnvFile: true,
-      isGlobal: true,
-      load: [getConfig],
-    }),
-    UserModule,
-    AuthModule,
-  ],
-  controllers: [],
-  providers: [
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: TransformInterceptor,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
-  ],
+	imports: [
+		CacheModule.register({
+			isGlobal: true
+		}),
+		ConfigModule.forRoot({
+			ignoreEnvFile: true,
+			isGlobal: true,
+			load: [getConfig]
+		}),
+		UserModule,
+		AuthModule
+	],
+	controllers: [],
+	providers: [
+		{
+			provide: APP_INTERCEPTOR,
+			useClass: TransformInterceptor
+		},
+		{
+			provide: APP_GUARD,
+			useClass: JwtAuthGuard
+		}
+	]
 })
-export class UserCenterModule { }
+export class UserCenterModule {}

@@ -7,6 +7,7 @@
  * @Description: Willing to work myself to death, just to outperform others.
  */
 import request from '../request';
+
 import { Login } from '@/type';
 
 export const login = async <T>(data: Login) =>

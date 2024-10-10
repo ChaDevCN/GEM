@@ -1,5 +1,6 @@
 import { makeAutoObservable, autorun } from 'mobx';
-import { UserInfo } from "@/type"
+
+import { UserInfo } from '@/type';
 
 type Value = 'dark' | 'light' | 'auto';
 
@@ -19,7 +20,7 @@ class Global {
 
 	setUserInfo = (userInfo: UserInfo) => {
 		this.userInfo = userInfo;
-	}
+	};
 
 	private loadFromStorage() {
 		const storedData = localStorage.getItem('globalStore');
@@ -34,7 +35,7 @@ class Global {
 		autorun(() => {
 			const dataToStore = {
 				appearance: this.appearance,
-				userInfo: this.userInfo,
+				userInfo: this.userInfo
 			};
 			localStorage.setItem('globalStore', JSON.stringify(dataToStore));
 		});

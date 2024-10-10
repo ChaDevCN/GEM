@@ -8,9 +8,9 @@ import { PrivilegeModule } from '../privilege/privilege.module';
 import { SystemModule } from '../system/system.module';
 
 @Module({
-  imports: [DatabaseModule, RolePrivilegeModule, PrivilegeModule, SystemModule],
-  providers: [RoleService, ...RoleProviders],
-  controllers: [RoleController],
-  exports: [RoleService],
+	imports: [DatabaseModule, RolePrivilegeModule, PrivilegeModule, SystemModule],
+	providers: [RoleService, ...RoleProviders],
+	controllers: [RoleController],
+	exports: [RoleService]
 })
-export class RoleModule { }
+export class RoleModule {}

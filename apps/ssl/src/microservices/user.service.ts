@@ -4,16 +4,15 @@ import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class UserService {
-  constructor(
-    @Inject('USER-SERVER') private userServer: ClientProxy
-  ) { }
+	constructor(@Inject('USER-SERVER') private userServer: ClientProxy) {}
 
-  getUser(user) {
-    try {
-      return firstValueFrom(this.userServer.send('userCenter.user.profile', user))
-    } catch (error) {
-      console.log(error);
-
-    }
-  }
+	getUser(user) {
+		try {
+			return firstValueFrom(
+				this.userServer.send('userCenter.user.profile', user)
+			);
+		} catch (error) {
+			console.log(error);
+		}
+	}
 }

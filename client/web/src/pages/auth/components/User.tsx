@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
 const User: React.FC = () => {
-    return <div>user</div>
-}
-export default User
+	return <div>user</div>;
+};
+export default User;

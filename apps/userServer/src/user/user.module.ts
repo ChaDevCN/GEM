@@ -19,15 +19,15 @@ import { PrivilegeModule } from '../privilege/privilege.module';
 import { OAuthService } from './oauth.service';
 
 @Module({
-  controllers: [UserController],
-  providers: [...UserProviders, UserService, OAuthService],
-  imports: [
-    forwardRef(() => DatabaseModule),
-    RolePrivilegeModule,
-    UserRoleModule,
-    RoleModule,
-    PrivilegeModule,
-  ],
-  exports: [UserService, OAuthService],
+	controllers: [UserController],
+	providers: [...UserProviders, UserService, OAuthService],
+	imports: [
+		forwardRef(() => DatabaseModule),
+		RolePrivilegeModule,
+		UserRoleModule,
+		RoleModule,
+		PrivilegeModule
+	],
+	exports: [UserService, OAuthService]
 })
 export class UserModule {}

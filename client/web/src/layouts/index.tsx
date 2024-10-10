@@ -1,11 +1,12 @@
-
 import React from 'react';
-import { Layout, ConfigProvider } from 'antd';
 import { Outlet } from 'react-router-dom';
+
+import { Layout, ConfigProvider } from 'antd';
+
 import Footer from './Footer';
-import Setting from './Setting';
-import Main from './Main';
 import Header from './Header';
+import Main from './Main';
+import Setting from './Setting';
 
 import './index.less';
 

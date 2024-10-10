@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import {
 	PieChartOutlined,
 	UnorderedListOutlined,
@@ -14,9 +15,10 @@ import {
 	LockOutlined,
 	AppstoreOutlined
 } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
 import { Menu as AntMenu } from 'antd';
 import { Layout } from 'antd';
+
+import type { MenuProps } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number];
 const { Sider: AntSider } = Layout;
 const items: MenuItem[] = [
@@ -27,20 +29,20 @@ const items: MenuItem[] = [
 		children: [
 			{
 				key: '/nginx-management/certificates',
-				label: '证书订单',
+				label: '证书订单'
 			},
 			{
 				key: '/nginx-management/certificate-monitoring',
-				label: '证书监控',
+				label: '证书监控'
 			},
 			{
 				key: '/nginx-management/certificate-renewal',
-				label: '证书续订',
+				label: '证书续订'
 
 				// 提供对与 Nginx 相关的所有域名进行管理的功能。
 			}
 		]
-	},
+	}
 	// { key: '/dashboard', icon: <PieChartOutlined />, label: '仪表板' },
 	// { key: '/event-logs', icon: <UnorderedListOutlined />, label: '事件记录' },
 	// { key: '/user-behavior', icon: <UserOutlined />, label: '用户行为' },

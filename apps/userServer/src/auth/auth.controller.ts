@@ -18,81 +18,81 @@ import { GoogleGuard } from './guards/google.guard';
 @ApiTags('用户认证')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+	constructor(private authService: AuthService) {}
 
-  @Get('/test')
-  @Public()
-  test() {
-    return 123;
-  }
+	@Get('/test')
+	@Public()
+	test() {
+		return 123;
+	}
 
-  @ApiOperation({
-    summary: '用户密码登录',
-  })
-  @Public()
-  @UseGuards(LocalGuard)
-  @Post('/login')
-  async UserLogin(
-    @PayloadUser() user: IPayloadUser,
-    @Res({ passthrough: true }) response,
-  ) {
-    const { access_token } = await this.authService.login(user);
-    const isProd = getEnv();
-    response.cookie('jwt', access_token, {
-      path: '/',
-      httpOnly: true,
-      domain: isProd === 'prod' ? '.aixdb.cn' : undefined,
-    });
+	@ApiOperation({
+		summary: '用户密码登录'
+	})
+	@Public()
+	@UseGuards(LocalGuard)
+	@Post('/login')
+	async UserLogin(
+		@PayloadUser() user: IPayloadUser,
+		@Res({ passthrough: true }) response
+	) {
+		const { access_token } = await this.authService.login(user);
+		const isProd = getEnv();
+		response.cookie('jwt', access_token, {
+			path: '/',
+			httpOnly: true,
+			domain: isProd === 'prod' ? '.aixdb.cn' : undefined
+		});
 
-    return { userInfo: user, access_token };
-  }
+		return { userInfo: user, access_token };
+	}
 
-  @ApiOperation({
-    summary: 'Google OAUTH 授权',
-  })
-  @Public()
-  @UseGuards(GoogleGuard)
-  @Get('/oauth/google')
-  @ApiQuery({ name: 'code', description: '授权回调 code' })
-  async OAuthGoogle(
-    @PayloadUser() user: IPayloadUser,
-    @Res({ passthrough: true }) response,
-  ) {
-    const { access_token } = await this.authService.login(user);
+	@ApiOperation({
+		summary: 'Google OAUTH 授权'
+	})
+	@Public()
+	@UseGuards(GoogleGuard)
+	@Get('/oauth/google')
+	@ApiQuery({ name: 'code', description: '授权回调 code' })
+	async OAuthGoogle(
+		@PayloadUser() user: IPayloadUser,
+		@Res({ passthrough: true }) response
+	) {
+		const { access_token } = await this.authService.login(user);
 
-    response.cookie('jwt', access_token, {
-      path: '/',
-      httpOnly: true,
-      domain: '.aixdb.cn',
-    });
+		response.cookie('jwt', access_token, {
+			path: '/',
+			httpOnly: true,
+			domain: '.aixdb.cn'
+		});
 
-    return access_token;
-  }
+		return access_token;
+	}
 
-  @ApiOperation({
-    summary: '登出',
-    description: '服务器端清除 jwt cookies',
-  })
-  @Post('logout')
-  async logout(@Res({ passthrough: true }) response) {
-    try {
-      response.cookie('jwt', '', { httpOnly: true, maxAge: 0 });
-    } catch (error) {
-      throw new BusinessException({
-        code: BUSINESS_ERROR_CODE.COMMON,
-        message: '服务器忙，稍后再试',
-      });
-    }
+	@ApiOperation({
+		summary: '登出',
+		description: '服务器端清除 jwt cookies'
+	})
+	@Post('logout')
+	async logout(@Res({ passthrough: true }) response) {
+		try {
+			response.cookie('jwt', '', { httpOnly: true, maxAge: 0 });
+		} catch (error) {
+			throw new BusinessException({
+				code: BUSINESS_ERROR_CODE.COMMON,
+				message: '服务器忙，稍后再试'
+			});
+		}
 
-    return { message: 'Logout successful' };
-  }
+		return { message: 'Logout successful' };
+	}
 
-  @ApiOperation({
-    summary: '解密 token 包含的信息',
-    description: '解密 token 包含的信息',
-  })
-  @Get('/token/info')
-  async getTokenInfo(@PayloadUser() user: IPayloadUser) {
-    return user;
-  }
+	@ApiOperation({
+		summary: '解密 token 包含的信息',
+		description: '解密 token 包含的信息'
+	})
+	@Get('/token/info')
+	async getTokenInfo(@PayloadUser() user: IPayloadUser) {
+		return user;
+	}
 }

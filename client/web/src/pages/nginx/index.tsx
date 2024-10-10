@@ -6,6 +6,6 @@
  * @FilePath: \GEM\client\web\src\pages\nginx\index.tsx
  * @Description: Willing to work myself to death, just to outperform others.
  */
-import { Outlet } from "react-router-dom"
-const Page = () => <Outlet />
-export default Page
+import { Outlet } from 'react-router-dom';
+const Page = () => <Outlet />;
+export default Page;

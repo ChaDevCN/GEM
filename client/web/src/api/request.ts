@@ -1,7 +1,5 @@
-
+import { message } from 'antd';
 import axios from 'axios';
-import axiosRetry from 'axios-retry';
-
 import {
 	type AxiosInstance,
 	InternalAxiosRequestConfig,
@@ -9,8 +7,10 @@ import {
 	AxiosResponse,
 	AxiosError
 } from 'axios';
+import axiosRetry from 'axios-retry';
+
 import { type RequestResponse } from '@/type';
-import { message } from 'antd';
+
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
 	disableRetry?: boolean;
 }
@@ -35,9 +35,9 @@ axiosRetry(serviceAxios, {
 		return retryCount * 10000;
 	},
 	retryCondition: (err) => {
-		const config = err.config as CustomAxiosRequestConfig
+		const config = err.config as CustomAxiosRequestConfig;
 		if (config.disableRetry) {
-			return false
+			return false;
 		}
 		const { code, message } = err;
 		return whiteRetry.has(<string>code) || message.includes('timeout');
@@ -58,12 +58,12 @@ serviceAxios.interceptors.response.use(
 		switch (response.data.status) {
 			case 200:
 			case 201:
-				return response.data
+				return response.data;
 			case 10002:
-				message.error('信息有误，请重新登录')
-				return response.data
+				message.error('信息有误，请重新登录');
+				return response.data;
 			default:
-				return response.data
+				return response.data;
 		}
 	},
 	(err: AxiosError) => {
@@ -72,7 +72,9 @@ serviceAxios.interceptors.response.use(
 );
 
 function createRequest(service: AxiosInstance) {
-	return function <T>(config: CustomAxiosRequestConfig): Promise<RequestResponse<T>> {
+	return function <T>(
+		config: CustomAxiosRequestConfig
+	): Promise<RequestResponse<T>> {
 		return service(config);
 	};
 }

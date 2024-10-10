@@ -13,8 +13,8 @@ import { RolePrivilegeService } from './role-privilege.service';
 import { rolePrivilegeProviders } from './user-privilege.providers';
 
 @Module({
-  providers: [RolePrivilegeService, ...rolePrivilegeProviders],
-  imports: [DatabaseModule],
-  exports: [RolePrivilegeService],
+	providers: [RolePrivilegeService, ...rolePrivilegeProviders],
+	imports: [DatabaseModule],
+	exports: [RolePrivilegeService]
 })
 export class RolePrivilegeModule {}

@@ -1,13 +1,20 @@
 import React, { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import {
+	MenuFoldOutlined,
+	MenuUnfoldOutlined,
+	BulbOutlined,
+	SunOutlined
+} from '@ant-design/icons';
+import { useRequest } from 'ahooks';
+import { Layout, Button, Space, Dropdown, Avatar, message } from 'antd';
 import { observer } from 'mobx-react-lite';
 
-import { Layout, Button, Space, Dropdown, Avatar, message } from 'antd';
-import { MenuFoldOutlined, MenuUnfoldOutlined, BulbOutlined, SunOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { useStores } from '@/store';
-import { useRequest } from 'ahooks';
+
 import { logout } from '@/api';
-import { useNavigate } from 'react-router-dom';
+import { useStores } from '@/store';
 
 interface ViewTransition {
 	finished: Promise<void>;
@@ -20,8 +27,6 @@ type DocumentNew = Document & {
 	startViewTransition: (callback: () => void) => ViewTransition | undefined;
 };
 
-
-
 const { Header: AntHeader } = Layout;
 const Header = ({
 	collapsed,
@@ -30,53 +35,45 @@ const Header = ({
 	collapsed: boolean;
 	setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-
-
 	const items: MenuProps['items'] = [
 		{
 			key: 1,
-			label: (
-				<div>系统管理</div>
-			),
+			label: <div>系统管理</div>,
 			disabled: true
 		},
 		{
 			key: 2,
-			label: (
-				<div>退出登录</div>
-			),
-		},
+			label: <div>退出登录</div>
+		}
 	];
 	const {
 		globalStore: { setTheme, userInfo, appearance }
 	} = useStores();
-	const nav = useNavigate()
-	const checked = useRef<boolean>(true)
+	const nav = useNavigate();
+	const checked = useRef<boolean>(true);
 	const { run } = useRequest(logout, {
 		manual: true,
 		onSuccess({ status, message: msg }) {
 			if (status === 200) {
-				nav('/login')
-				message.success('成功退出...!')
+				nav('/login');
+				message.success('成功退出...!');
 			} else {
-				message.error(JSON.stringify(msg))
+				message.error(JSON.stringify(msg));
 			}
 		}
-	})
+	});
 	const onClick = ({ key }: { key: string }) => {
 		switch (key) {
 			case '2':
-				run()
+				run();
 				break;
 		}
-
-	}
+	};
 
 	const onChange = (
 		checked: boolean,
 		e: React.MouseEvent<HTMLButtonElement>
 	) => {
-
 		const value = checked ? 'light' : 'dark';
 
 		const transition = (document as DocumentNew).startViewTransition(() => {
@@ -114,7 +111,8 @@ const Header = ({
 			});
 	};
 	const ColorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
-	const getReandomColor = () => ColorList[Math.floor(Math.random() * ColorList.length)]
+	const getReandomColor = () =>
+		ColorList[Math.floor(Math.random() * ColorList.length)];
 	return (
 		<AntHeader>
 			<div className="flex justify-between">
@@ -128,17 +126,27 @@ const Header = ({
 						height: 64
 					}}
 				/>
-				<Space className='mr-5' align='center' size={'middle'}>
-					<Dropdown menu={{ items, onClick }} placement="bottom" arrow trigger={['click']}>
-						<Avatar style={{ background: getReandomColor() }} className='mb-1 cursor-pointer'>{userInfo?.username[0]}</Avatar>
+				<Space className="mr-5" align="center" size={'middle'}>
+					<Dropdown
+						menu={{ items, onClick }}
+						placement="bottom"
+						arrow
+						trigger={['click']}
+					>
+						<Avatar
+							style={{ background: getReandomColor() }}
+							className="mb-1 cursor-pointer"
+						>
+							{userInfo?.username[0]}
+						</Avatar>
 					</Dropdown>
 					<Button
 						icon={appearance === 'dark' ? <SunOutlined /> : <BulbOutlined />}
 						onClick={(e) => {
-							checked.current = !checked.current
+							checked.current = !checked.current;
 							onChange(checked.current, e as any);
 						}}
-						className='mt-2'
+						className="mt-2"
 					/>
 				</Space>
 			</div>

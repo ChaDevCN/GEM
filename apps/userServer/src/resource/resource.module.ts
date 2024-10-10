@@ -7,9 +7,9 @@ import { SystemModule } from '../system/system.module';
 import { PrivilegeModule } from '../privilege/privilege.module';
 
 @Module({
-  imports: [DatabaseModule, SystemModule, forwardRef(() => PrivilegeModule)],
-  providers: [ResourceService, ...ResourceProviders],
-  controllers: [ResourceController],
-  exports: [ResourceService],
+	imports: [DatabaseModule, SystemModule, forwardRef(() => PrivilegeModule)],
+	providers: [ResourceService, ...ResourceProviders],
+	controllers: [ResourceController],
+	exports: [ResourceService]
 })
 export class ResourceModule {}

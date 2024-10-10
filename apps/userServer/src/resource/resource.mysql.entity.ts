@@ -1,49 +1,49 @@
 import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
+	Column,
+	CreateDateColumn,
+	Entity,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn
 } from 'typeorm';
 import { STATUS } from '../system/system.mysql.entity';
 
 export enum ResourceType {
-  Menu = 'menu',
-  Nomal = 'nomal',
+	Menu = 'menu',
+	Nomal = 'nomal'
 }
 
 @Entity()
 export class Resource {
-  @PrimaryGeneratedColumn()
-  id?: number;
+	@PrimaryGeneratedColumn()
+	id?: number;
 
-  @Column()
-  name: string;
+	@Column()
+	name: string;
 
-  @Column()
-  key: string;
+	@Column()
+	key: string;
 
-  @Column({ default: 0 })
-  sort?: number;
+	@Column({ default: 0 })
+	sort?: number;
 
-  @Column({ default: null })
-  parentId?: number;
+	@Column({ default: null })
+	parentId?: number;
 
-  @Column()
-  systemId: number;
+	@Column()
+	systemId: number;
 
-  @Column({ default: ResourceType.Nomal })
-  type: ResourceType;
+	@Column({ default: ResourceType.Nomal })
+	type: ResourceType;
 
-  @Column({ default: STATUS.enabled })
-  status?: STATUS;
+	@Column({ default: STATUS.enabled })
+	status?: STATUS;
 
-  @Column({ type: 'text', default: null })
-  description?: string;
+	@Column({ type: 'text', default: null })
+	description?: string;
 
-  @CreateDateColumn()
-  createTime?: string;
+	@CreateDateColumn()
+	createTime?: string;
 
-  @UpdateDateColumn()
-  updateTime?: string;
+	@UpdateDateColumn()
+	updateTime?: string;
 }

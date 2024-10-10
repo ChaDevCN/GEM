@@ -8,69 +8,69 @@ import { Privilege } from './privilege.mysql.entity';
 
 @Injectable()
 export class PrivilegeService {
-  constructor(
-    @Inject('PRIVILEGE_REPOSITORY')
-    private privilegeRepository: Repository<Privilege>,
-  ) { }
+	constructor(
+		@Inject('PRIVILEGE_REPOSITORY')
+		private privilegeRepository: Repository<Privilege>
+	) {}
 
-  createOrUpdate(privilege: Privilege) {
-    return this.privilegeRepository.save(privilege);
-  }
+	createOrUpdate(privilege: Privilege) {
+		return this.privilegeRepository.save(privilege);
+	}
 
-  list(systemId: number) {
-    return this.privilegeRepository.find({
-      where: {
-        systemId,
-      },
-    });
-  }
+	list(systemId: number) {
+		return this.privilegeRepository.find({
+			where: {
+				systemId
+			}
+		});
+	}
 
-  listByResourceKey(resourceKey: string) {
-    return this.privilegeRepository.find({
-      where: {
-        resourceKey,
-      },
-    });
-  }
+	listByResourceKey(resourceKey: string) {
+		return this.privilegeRepository.find({
+			where: {
+				resourceKey
+			}
+		});
+	}
 
-  findById(id) {
-    return this.privilegeRepository.findOne({
-      where: {
-        id,
-      },
-    });
-  }
+	findById(id) {
+		return this.privilegeRepository.findOne({
+			where: {
+				id
+			}
+		});
+	}
 
-  findByIds(ids: number[]) {
-    return this.privilegeRepository.find({
-      where: {
-        id: In(ids),
-      },
-    });
-  }
+	findByIds(ids: number[]) {
+		return this.privilegeRepository.find({
+			where: {
+				id: In(ids)
+			}
+		});
+	}
 
-  delete(id: number) {
-    return this.privilegeRepository.delete(id);
-  }
+	delete(id: number) {
+		return this.privilegeRepository.delete(id);
+	}
 
-  async paginate(
-    searchParams: PrivilegeListWithPaginationDto,
-    page: PaginationParams,
-  ): Promise<Pagination<Privilege, CustomPaginationMeta>> {
-    const queryBuilder =
-      this.privilegeRepository.createQueryBuilder('privilege');
-    queryBuilder.orderBy('privilege.createTime', 'DESC');
+	async paginate(
+		searchParams: PrivilegeListWithPaginationDto,
+		page: PaginationParams
+	): Promise<Pagination<Privilege, CustomPaginationMeta>> {
+		const queryBuilder =
+			this.privilegeRepository.createQueryBuilder('privilege');
+		queryBuilder.orderBy('privilege.createTime', 'DESC');
 
-    // 关键字
-    if (isNotEmpty(searchParams.keyword)) {
-      queryBuilder.andWhere('privilege.name LIKE :name', {
-        name: `%${searchParams.keyword}%`,
-      });
-    }
+		// 关键字
+		if (isNotEmpty(searchParams.keyword)) {
+			queryBuilder.andWhere('privilege.name LIKE :name', {
+				name: `%${searchParams.keyword}%`
+			});
+		}
 
-    return paginate<Privilege, CustomPaginationMeta>(
-      queryBuilder,
-      getPaginationOptions(page),
-    );
-  }
+		return paginate<Privilege, CustomPaginationMeta>(
+			queryBuilder,
+			getPaginationOptions(page)
+		);
+	}
 }

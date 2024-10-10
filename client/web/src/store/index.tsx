@@ -1,5 +1,7 @@
 import * as React from 'react';
+
 import { configure } from 'mobx';
+
 import { globalStore } from './global';
 
 configure({ enforceActions: 'always' });

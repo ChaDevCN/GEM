@@ -5,17 +5,17 @@ import { Strategy } from 'passport-custom';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy, 'local') {
-  constructor(private authService: AuthService) {
-    super();
-  }
+	constructor(private authService: AuthService) {
+		super();
+	}
 
-  async validate(req): Promise<IPayloadUser> {
-    const user = await this.authService.validateLocalUser({ ...req.body });
+	async validate(req): Promise<IPayloadUser> {
+		const user = await this.authService.validateLocalUser({ ...req.body });
 
-    if (!user) {
-      throw new UnauthorizedException();
-    }
+		if (!user) {
+			throw new UnauthorizedException();
+		}
 
-    return user;
-  }
+		return user;
+	}
 }

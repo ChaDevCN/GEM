@@ -1,44 +1,44 @@
 import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
+	Column,
+	CreateDateColumn,
+	Entity,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn
 } from 'typeorm';
 
 export enum STATUS {
-  disabled = 0,
-  enabled = 1,
+	disabled = 0,
+	enabled = 1
 }
 @Entity()
 export class System {
-  @PrimaryGeneratedColumn()
-  id?: number;
+	@PrimaryGeneratedColumn()
+	id?: number;
 
-  @Column()
-  name: string;
+	@Column()
+	name: string;
 
-  @Column({ type: 'text', default: null })
-  description?: string;
+	@Column({ type: 'text', default: null })
+	description?: string;
 
-  @Column({ default: STATUS.enabled })
-  status?: STATUS;
+	@Column({ default: STATUS.enabled })
+	status?: STATUS;
 
-  @Column()
-  creatorId?: number;
+	@Column()
+	creatorId?: number;
 
-  @Column()
-  creatorName?: string;
+	@Column()
+	creatorName?: string;
 
-  @Column()
-  updateId?: number;
+	@Column()
+	updateId?: number;
 
-  @Column()
-  updateName?: string;
+	@Column()
+	updateName?: string;
 
-  @CreateDateColumn()
-  createTime?: string;
+	@CreateDateColumn()
+	createTime?: string;
 
-  @UpdateDateColumn()
-  updateTime?: string;
+	@UpdateDateColumn()
+	updateTime?: string;
 }

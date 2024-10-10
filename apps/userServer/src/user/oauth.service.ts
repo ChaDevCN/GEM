@@ -11,8 +11,8 @@ import { getGoogleUser } from '@app/common';
 
 @Injectable()
 export class OAuthService {
-  async getGoogleUserToken(code: string) {
-    const res: any = await getGoogleUser({ code });
-    return res;
-  }
+	async getGoogleUserToken(code: string) {
+		const res: any = await getGoogleUser({ code });
+		return res;
+	}
 }

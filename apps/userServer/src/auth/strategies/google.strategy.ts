@@ -5,19 +5,19 @@ import { Strategy } from 'passport-custom';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
-  constructor(private authService: AuthService) {
-    super();
-  }
+	constructor(private authService: AuthService) {
+		super();
+	}
 
-  async validate(req): Promise<IPayloadUser> {
-    const q: any = req.query;
+	async validate(req): Promise<IPayloadUser> {
+		const q: any = req.query;
 
-    const user = await this.authService.validateGoogleUser(q.code as string);
+		const user = await this.authService.validateGoogleUser(q.code as string);
 
-    if (!user) {
-      throw new UnauthorizedException();
-    }
+		if (!user) {
+			throw new UnauthorizedException();
+		}
 
-    return user;
-  }
+		return user;
+	}
 }
