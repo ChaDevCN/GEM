@@ -1,12 +1,3 @@
-/*
- * @Author: Charlie <charlie.l1u@outlook.com>
- * @Date: 2024-08-24 16:03:06
- * @LastEditors: Charlie <charlie.l1u@outlook.com>
- * @LastEditTime: 2024-08-25 11:49:43
- * @FilePath: \GEM\apps\user\src\user\user.dto.ts
- * @Description: Willing to work myself to death, just to outperform others.
- */
-
 import { ApiProperty } from '@nestjs/swagger';
 import {
 	IsNotEmpty,

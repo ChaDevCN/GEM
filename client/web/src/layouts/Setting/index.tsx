@@ -28,6 +28,10 @@ const items: MenuItem[] = [
 		label: '服务中心',
 		children: [
 			{
+				key: '/nginx-management/cert',
+				label: '证书管理'
+			},
+			{
 				key: '/nginx-management/certificates',
 				label: '证书订单'
 			},
@@ -38,8 +42,6 @@ const items: MenuItem[] = [
 			{
 				key: '/nginx-management/certificate-renewal',
 				label: '证书续订'
-
-				// 提供对与 Nginx 相关的所有域名进行管理的功能。
 			}
 		]
 	}

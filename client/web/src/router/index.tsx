@@ -14,16 +14,20 @@ const [
 	Login,
 	NotFound,
 	Auth,
-	CertificateMonitoring
+	CertificateMonitoring,
+	Cert,
+	ApplyCert
 ] = [
 	() => import('@/pages/index'), // /
 	() => import('@/pages/nginx/index'), // nginx
 	() => import('@/pages/nginx/certificates'), // certificates
 	() => import('@/pages/nginx/certificateRenewal'), // 续订
 	() => import('@/pages/login/index'), // login
-	() => import('@/components/NotFound/index'), //404
+	() => import('@/components/base/notFound/index'), //404
 	() => import('@/pages/auth'), //系统管理
-	() => import('@/pages/nginx/certificateMonitoring')
+	() => import('@/pages/nginx/certificateMonitoring'),
+	() => import('@/pages/nginx/cert'),
+	() => import('@/pages/nginx/applyCert')
 ].map((item) =>
 	loadable(item as any, {
 		fallback: <div>Loading...</div>
@@ -82,6 +86,14 @@ const router = [
 					{
 						path: 'certificate-monitoring',
 						element: <CertificateMonitoring />
+					},
+					{
+						path: 'cert',
+						element: <Cert />
+					},
+					{
+						path: 'applycert',
+						element: <ApplyCert />
 					}
 				]
 			},

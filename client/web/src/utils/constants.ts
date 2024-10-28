@@ -1,9 +1,14 @@
-/*
- * @Author: Charlie <charlie.l1u@outlook.com>
- * @Date: 2024-08-25 20:41:37
- * @LastEditors: Charlie <charlie.l1u@outlook.com>
- * @LastEditTime: 2024-08-25 20:41:58
- * @FilePath: \GEM\client\web\src\utils\constants.ts
- * @Description: Willing to work myself to death, just to outperform others.
- */
+import letsEncrypt from '@/assets/image/lets-encrypt.png';
 export const TOKEN_KEY = 'access_token';
+
+export const certificateConfig = {
+	supportedVendors: [
+		{
+			name: "Let's Encrypt",
+			logo: letsEncrypt,
+			url: 'https://letsencrypt.org/',
+			description: '免费的自动化 SSL 证书服务'
+		}
+	],
+	supportedEncryptionTypes: ['ECC', 'RSA']
+};

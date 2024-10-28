@@ -1,1 +1,2 @@
-export * from './EllipsisText';
+export * from './base/ellipsisText';
+export * from './base/copyToClipboard';
