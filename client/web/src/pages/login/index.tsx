@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useRequest } from 'ahooks';
@@ -11,12 +11,24 @@ import { login } from '@/api';
 import loginImg from '@/assets/image/image.png';
 import { useStores } from '@/store';
 import { type FieldType, type Profile } from '@/type';
-
+const defaultLoginInfo = {
+	username: '',
+	password: '',
+	remember: false
+};
 const App: React.FC = () => {
 	const nav = useNavigate();
 	const {
 		globalStore: { setUserInfo }
 	} = useStores();
+	const [loginInfo] = useState(() => {
+		try {
+			const loginInfo = JSON.parse(localStorage.getItem('login_info') || '{}');
+			return loginInfo;
+		} catch (_) {
+			return defaultLoginInfo;
+		}
+	});
 	const { run, loading } = useRequest(login<Profile>, {
 		manual: true,
 		onSuccess: ({ message, status, data: { userInfo } }) => {
@@ -40,11 +52,19 @@ const App: React.FC = () => {
 	});
 	const onFinish: FormProps<FieldType>['onFinish'] = async ({
 		username,
-		password
+		password,
+		remember
 	}) => {
 		if (!username || !password) return;
 		run({ username, password });
+		if (remember) {
+			localStorage.setItem(
+				'login_info',
+				JSON.stringify({ username, password, remember })
+			);
+		}
 	};
+
 	return (
 		<div
 			className={`w-full h-[100vh]  flex items-center justify-between overflow-x-hidden bg-no-repeat bg-center bg-cover`}
@@ -57,6 +77,7 @@ const App: React.FC = () => {
 					onFinish={onFinish}
 					autoComplete="off"
 					className="mt-[30px]"
+					initialValues={loginInfo}
 				>
 					<Form.Item<FieldType>
 						label="Username"

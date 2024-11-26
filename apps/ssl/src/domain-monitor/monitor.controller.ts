@@ -82,18 +82,7 @@ export class CertificateMonitoringController {
 	}
 
 	@Delete(':id')
-	async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
-		const result = await this.certificateService.remove(id);
-		if (!result) {
-			throw new NotFoundException(
-				`Certificate monitoring record with ID ${id} not found`
-			);
-		}
+	async remove(@Param('id', ParseIntPipe) id: number) {
+		return await this.certificateService.remove(id);
 	}
-
-	// @Process('checkValidity')
-	// async checkValidity(job: Job<{ certificateId: number }>) {
-	//     const { certificateId } = job.data;
-	//     await this.certificateService.checkValidity(certificateId);
-	// }
 }

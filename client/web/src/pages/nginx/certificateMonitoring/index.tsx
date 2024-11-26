@@ -24,7 +24,8 @@ import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import {
 	addCertificateMonitoring,
 	getCertificateMonitoringList,
-	updataTime
+	updataTime,
+	deleteCertificateMonitoring
 } from '@/api';
 import { EllipsisText } from '@/components';
 import { CertificateMonitoring } from '@/type';
@@ -58,17 +59,34 @@ const Page = () => {
 			}
 		}
 	);
-	const { run: runUpdateTime } = useRequest((id) => updataTime(id), {
-		manual: true,
-		onSuccess: ({ status }) => {
-			if (status !== 200) {
-				message.error('服务器忙，稍后再试');
-			} else {
-				message.success('刷新成功');
+	const { run: runUpdateTime, loading: updataTimeLoading } = useRequest(
+		(id) => updataTime(id),
+		{
+			manual: true,
+			onSuccess: ({ status, ...res }) => {
+				console.log(res);
+
+				if (status !== 200) {
+					message.error('服务器忙，稍后再试');
+				} else {
+					message.success('刷新成功');
+				}
+				tableRef.current?.reload();
 			}
-			tableRef.current?.reload();
 		}
-	});
+	);
+	const { run: deleteMonitoring, loading: deleteMonitoringLoading } =
+		useRequest((id) => deleteCertificateMonitoring(id), {
+			manual: true,
+			onSuccess: ({ status }) => {
+				if (status !== 200) {
+					message.error('服务器忙，稍后再试');
+				} else {
+					message.success('删除成功');
+				}
+				tableRef.current?.reload();
+			}
+		});
 	const items: MenuProps['items'] = [
 		{
 			key: '1',
@@ -81,14 +99,17 @@ const Page = () => {
 		},
 		{
 			key: '3',
-			label: <div>删除</div>,
-			disabled: true
+			label: <div>删除</div>
 		}
 	];
 	const onClick = (key: string, id: number) => {
 		switch (key) {
 			case '1':
 				runUpdateTime(id);
+				break;
+			case '3':
+				console.log('deleteCertificateMonitoring');
+				deleteMonitoring(id);
 				break;
 		}
 	};
@@ -287,6 +308,7 @@ const Page = () => {
 					pageSize: 10,
 					showSizeChanger: false
 				}}
+				loading={updataTimeLoading || deleteMonitoringLoading}
 			/>
 			<Modal
 				open={isModalOpen}

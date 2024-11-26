@@ -1,4 +1,4 @@
 const Page = () => {
-	return <div>ind ex</div>;
+	return <div>index</div>;
 };
 export default Page;

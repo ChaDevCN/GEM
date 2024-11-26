@@ -12,7 +12,6 @@ import * as tls from 'tls';
 import * as dns from 'dns';
 import { BUSINESS_ERROR_CODE, BusinessException } from '@app/comm';
 import { CreateCertificateMonitoringDto } from './monitor.dto';
-// const pLimit = require('p-limit')
 @Injectable()
 export class CertificateMonitoringService {
 	constructor(
@@ -94,8 +93,6 @@ export class CertificateMonitoringService {
 			await Promise.all(updatePromises);
 			console.log(`Processed batch ${i / concurrency + 1}`);
 		}
-
-		console.log('All certificates have been processed.');
 	}
 
 	async getAll(): Promise<CertificateMonitoring[]> {
@@ -123,6 +120,8 @@ export class CertificateMonitoringService {
 
 	async remove(id: number): Promise<boolean> {
 		const result = await this.certificateRepo.delete(id);
+		console.log(result);
+
 		return result.affected > 0;
 	}
 

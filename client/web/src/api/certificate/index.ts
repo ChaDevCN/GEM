@@ -57,3 +57,9 @@ export const deleteAcmeAccount = async (id: number) =>
 		method: 'delete',
 		url: `/api/v2/cert/account/${id}`
 	});
+
+export const deleteCertificateMonitoring = async <T>(id: number) =>
+	await request<T>({
+		method: 'delete',
+		url: `/api/v2/certificate-monitoring/${id}`
+	});
