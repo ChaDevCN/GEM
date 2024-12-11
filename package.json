@@ -5,8 +5,8 @@
 	"scripts": {
 		"dev": "turbo run dev",
 		"build": "turbo run build",
-		"start:ssl": "cross-env RUNNING_ENV=dev nest start ssl --watch",
-		"start:user": "cross-env RUNNING_ENV=dev nest start --watch user-server",
+		"start:ssl": "cross-env RUNNING_ENV=prod nest start ssl --watch",
+		"start:user": "cross-env RUNNING_ENV=prod nest start --watch user-server",
 		"build:ssl": "cross-env RUNNING_ENV=prod nest build  ssl",
 		"build:user": "cross-env RUNNING_ENV=prod nest build user-server"
 	},

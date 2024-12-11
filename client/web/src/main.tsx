@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+import { ConfigProvider } from 'antd';
 import { ThemeProvider } from 'antd-style';
 import { ClickToComponent } from 'click-to-react-component';
 import { observer } from 'mobx-react-lite';
@@ -29,7 +30,24 @@ const App = observer(() => {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<StoresProvider value={stores}>
-		<ClickToComponent />
-		<App />
+		<ConfigProvider
+			theme={{
+				token: {
+					colorPrimary: '#7c3aed',
+					colorPrimaryBg: '#f8f0ff',
+					colorPrimaryBgHover: '#f0e0ff',
+					colorPrimaryBorder: '#d9b8ff',
+					colorPrimaryBorderHover: '#bf8fff',
+					colorPrimaryHover: '#a064fa',
+					colorPrimaryActive: '#5b26c7',
+					colorPrimaryTextHover: '#a064fa',
+					colorPrimaryText: '#7c3aed',
+					colorPrimaryTextActive: '#5b26c7'
+				}
+			}}
+		>
+			<ClickToComponent />
+			<App />
+		</ConfigProvider>
 	</StoresProvider>
 );

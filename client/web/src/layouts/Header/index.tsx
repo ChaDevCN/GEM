@@ -127,6 +127,14 @@ const Header = ({
 					}}
 				/>
 				<Space className="mr-5" align="center" size={'middle'}>
+					<Button
+						icon={appearance === 'dark' ? <SunOutlined /> : <BulbOutlined />}
+						onClick={(e) => {
+							checked.current = !checked.current;
+							onChange(checked.current, e as any);
+						}}
+						className="flex items-center justify-center mt-2"
+					/>
 					<Dropdown
 						menu={{ items, onClick }}
 						placement="bottom"
@@ -135,19 +143,11 @@ const Header = ({
 					>
 						<Avatar
 							style={{ background: getReandomColor() }}
-							className="mb-1 cursor-pointer"
+							className="cursor-pointer"
 						>
 							{userInfo?.username[0]}
 						</Avatar>
 					</Dropdown>
-					<Button
-						icon={appearance === 'dark' ? <SunOutlined /> : <BulbOutlined />}
-						onClick={(e) => {
-							checked.current = !checked.current;
-							onChange(checked.current, e as any);
-						}}
-						className="mt-2"
-					/>
 				</Space>
 			</div>
 		</AntHeader>

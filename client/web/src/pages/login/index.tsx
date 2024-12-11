@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useRequest } from 'ahooks';
-import { Button, Checkbox, Form, Input, Card, message as Message } from 'antd';
+import { Button, Checkbox, Form, Input, message as Message } from 'antd';
 import { observer } from 'mobx-react-lite';
 
 import type { FormProps } from 'antd';
 
 import { login } from '@/api';
-import loginImg from '@/assets/image/image.png';
+import loginImg from '@/assets/images/login_bg.svg';
+import loginLeft from '@/assets/images/login_left.png';
 import { useStores } from '@/store';
 import { type FieldType, type Profile } from '@/type';
+import './index.less';
 const defaultLoginInfo = {
 	username: '',
 	password: '',
@@ -67,50 +69,59 @@ const App: React.FC = () => {
 
 	return (
 		<div
-			className={`w-full h-[100vh]  flex items-center justify-between overflow-x-hidden bg-no-repeat bg-center bg-cover`}
+			className={`w-full h-screen  flex items-center justify-center overflow-x-hidden bg-[#eee] bg-no-repeat bg-center bg-cover login-page`}
 			style={{ backgroundImage: `url(${loginImg})` }}
 		>
-			<Card className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] md:w-auto min-w-[300px]">
-				<Form
-					disabled={loading}
-					name="basic"
-					onFinish={onFinish}
-					autoComplete="off"
-					className="mt-[30px]"
-					initialValues={loginInfo}
-				>
-					<Form.Item<FieldType>
-						label="Username"
-						name="username"
-						rules={[{ required: true, message: 'Please input your username!' }]}
+			<div className="login-box">
+				<div className="login-left  lg:block hidden lg:w-[750px]">
+					<img src={loginLeft} alt="login" />
+				</div>
+				<div className="login-form">
+					<Form
+						disabled={loading}
+						name="basic"
+						onFinish={onFinish}
+						autoComplete="off"
+						className="mt-[30px]"
+						initialValues={loginInfo}
 					>
-						<Input />
-					</Form.Item>
-
-					<Form.Item<FieldType>
-						label="Password"
-						name="password"
-						rules={[{ required: true, message: 'Please input your password!' }]}
-					>
-						<Input.Password />
-					</Form.Item>
-
-					<Form.Item<FieldType> name="remember" valuePropName="checked">
-						<Checkbox>Remember me</Checkbox>
-					</Form.Item>
-
-					<Form.Item>
-						<Button
-							type="primary"
-							htmlType="submit"
-							className=" w-full uppercase"
-							loading={loading}
+						<Form.Item<FieldType>
+							label="Username"
+							name="username"
+							rules={[
+								{ required: true, message: 'Please input your username!' }
+							]}
 						>
-							login
-						</Button>
-					</Form.Item>
-				</Form>
-			</Card>
+							<Input />
+						</Form.Item>
+
+						<Form.Item<FieldType>
+							label="Password"
+							name="password"
+							rules={[
+								{ required: true, message: 'Please input your password!' }
+							]}
+						>
+							<Input.Password />
+						</Form.Item>
+
+						<Form.Item<FieldType> name="remember" valuePropName="checked">
+							<Checkbox>Remember me</Checkbox>
+						</Form.Item>
+
+						<Form.Item>
+							<Button
+								type="primary"
+								htmlType="submit"
+								className=" w-full uppercase"
+								loading={loading}
+							>
+								login
+							</Button>
+						</Form.Item>
+					</Form>
+				</div>
+			</div>
 		</div>
 	);
 };
