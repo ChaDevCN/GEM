@@ -41,6 +41,7 @@ const statusColors = {
 };
 const Page = () => {
 	const [list, setList] = useState<CertificateMonitoring[] | null>(null);
+	const [loadingList, setLoadingList] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const tableRef = useRef<ActionType>();
 	const { run, loading } = useRequest(
@@ -59,6 +60,7 @@ const Page = () => {
 			}
 		}
 	);
+
 	const { run: runUpdateTime, loading: updataTimeLoading } = useRequest(
 		(id) => updataTime(id),
 		{
@@ -186,8 +188,8 @@ const Page = () => {
 					daysUntilExpiry <= 0
 						? 'exception'
 						: progressPercent < 100
-							? 'active'
-							: 'success';
+						? 'active'
+						: 'success';
 
 				return (
 					<Tooltip title={`剩余${daysUntilExpiry} 天`}>
@@ -284,14 +286,17 @@ const Page = () => {
 			<ProTable
 				actionRef={tableRef}
 				request={async () => {
-					const res =
-						await getCertificateMonitoringList<CertificateMonitoring[]>();
+					setLoadingList(() => true);
+					const res = await getCertificateMonitoringList<
+						CertificateMonitoring[]
+					>();
 					let { data } = res;
 					const { status } = res;
 					if (status !== 200) {
 						data = [];
 					}
 					setList(data);
+					setLoadingList(() => false);
 					return {
 						total: data.length,
 						data,
@@ -308,7 +313,7 @@ const Page = () => {
 					pageSize: 10,
 					showSizeChanger: false
 				}}
-				loading={updataTimeLoading || deleteMonitoringLoading}
+				loading={updataTimeLoading || deleteMonitoringLoading || loadingList}
 			/>
 			<Modal
 				open={isModalOpen}

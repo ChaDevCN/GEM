@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, createRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import loadable from '@loadable/component';
@@ -7,7 +7,7 @@ import { getUserInfo } from '@/api';
 import Layout from '@/layouts';
 
 const [
-	Page,
+	//Page,
 	Nginx,
 	Certificates,
 	Renewal,
@@ -16,7 +16,7 @@ const [
 	Auth,
 	CertificateMonitoring
 ] = [
-	() => import('@/pages/index'), // /
+	//() => import('@/pages/index'), // /
 	() => import('@/pages/nginx/index'), // nginx
 	() => import('@/pages/nginx/certificates'), // certificates
 	() => import('@/pages/nginx/certificateRenewal'), // 续订
@@ -45,7 +45,8 @@ const AuthCom = ({ children }: { children: React.ReactNode }) => {
 const router = [
 	{
 		path: '/login',
-		element: <Login />
+		element: <Login />,
+		nodeRef: createRef()
 	},
 	{
 		path: '/',
@@ -61,7 +62,8 @@ const router = [
 			// },
 			{
 				path: '',
-				element: <CertificateMonitoring />
+				element: <CertificateMonitoring />,
+				nodeRef: createRef()
 			},
 			{
 				path: '/nginx-management',
@@ -69,25 +71,30 @@ const router = [
 				children: [
 					{
 						path: '',
-						element: <CertificateMonitoring />
+						element: <CertificateMonitoring />,
+						nodeRef: createRef()
 					},
 					{
 						path: 'certificates',
-						element: <Certificates />
+						element: <Certificates />,
+						nodeRef: createRef()
 					},
 					{
 						path: 'certificate-renewal',
-						element: <Renewal />
+						element: <Renewal />,
+						nodeRef: createRef()
 					},
 					{
 						path: 'certificate-monitoring',
-						element: <CertificateMonitoring />
+						element: <CertificateMonitoring />,
+						nodeRef: createRef()
 					}
 				]
 			},
 			{
 				path: '*',
-				element: <NotFound />
+				element: <NotFound />,
+				nodeRef: createRef()
 			}
 		]
 	}
